@@ -8,7 +8,7 @@ extern "C" {
 #include <nng/transport/zerotier/zerotier.h>
 }
 
-namespace nng::zt {
+namespace nng { namespace zt {
 
 inline void register_transport() {
 	int r = nng_zt_register();
@@ -44,7 +44,12 @@ enum class option {
 
 namespace detail {
 
-inline const char* const option_names[] = {
+#if __cpp_inline_variables >= 201606
+inline
+#else
+static
+#endif
+const char* const option_names[] = {
 	NNG_OPT_ZT_MTU,
 	NNG_OPT_ZT_NWID,
 	NNG_OPT_ZT_NODE,
@@ -221,6 +226,6 @@ inline void set_opt_deorbit( listener_view s, uint64_t v ) {
 	s.set_opt_uint64( to_name(option::deorbit), v );
 }
 
-}
+}}
 
 #endif

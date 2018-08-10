@@ -3,7 +3,7 @@
 #include "server_view.h"
 #include <nngpp/url_view.h>
 
-namespace nng::http {
+namespace nng { namespace http {
 
 struct server : server_view {
 	
@@ -45,6 +45,6 @@ struct server : server_view {
 
 };
 
-}
+}}
 
 #endif

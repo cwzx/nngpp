@@ -3,7 +3,7 @@
 #include <nngpp/ctx.h>
 #include <nng/protocol/survey0/survey.h>
 
-namespace nng::survey {
+namespace nng { namespace survey {
 inline namespace v0 {
 
 inline socket open() {
@@ -30,7 +30,12 @@ enum class option {
 
 namespace detail {
 
-inline const char* const option_names[] = {
+#if __cpp_inline_variables >= 201606
+inline
+#else
+static
+#endif
+const char* const option_names[] = {
 	NNG_OPT_SURVEYOR_SURVEYTIME
 };
 
@@ -57,6 +62,6 @@ inline void set_opt_survey_time( ctx_view s, nng_duration v ) {
 }
 
 }
-}
+}}
 
 #endif

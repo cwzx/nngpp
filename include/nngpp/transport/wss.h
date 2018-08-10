@@ -6,7 +6,7 @@ extern "C" {
 #include <nng/transport/ws/websocket.h>
 }
 
-namespace nng::wss {
+namespace nng { namespace wss {
 
 inline void register_transport() {
 	int r = nng_wss_register();
@@ -15,6 +15,6 @@ inline void register_transport() {
 	}
 }
 
-}
+}}
 
 #endif

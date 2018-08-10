@@ -3,7 +3,7 @@
 #include <nngpp/socket.h>
 #include <nng/protocol/bus0/bus.h>
 
-namespace nng::bus {
+namespace nng { namespace bus {
 inline namespace v0 {
 
 inline socket open() {
@@ -25,6 +25,6 @@ inline socket open_raw() {
 }
 
 }
-}
+}}
 
 #endif

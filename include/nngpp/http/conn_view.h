@@ -4,7 +4,7 @@
 #include "req_view.h"
 #include "res_view.h"
 
-namespace nng::http {
+namespace nng { namespace http {
 
 struct conn_view {
 protected:
@@ -67,6 +67,6 @@ public:
 	}
 };
 
-}
+}}
 
 #endif

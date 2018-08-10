@@ -6,7 +6,7 @@ extern "C" {
 #include <nng/transport/inproc/inproc.h>
 }
 
-namespace nng::inproc {
+namespace nng { namespace inproc {
 
 inline void register_transport() {
 	int r = nng_inproc_register();
@@ -15,6 +15,6 @@ inline void register_transport() {
 	}
 }
 
-}
+}}
 
 #endif

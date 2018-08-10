@@ -9,7 +9,7 @@ extern "C" {
 #include <nng/transport/tls/tls.h>
 }
 
-namespace nng::tls {
+namespace nng { namespace tls {
 
 inline void register_transport() {
 	int r = nng_tls_register();
@@ -29,7 +29,12 @@ enum class option {
 
 namespace detail {
 
-inline const char* const option_names[] = {
+#if __cpp_inline_variables >= 201606
+inline
+#else
+static
+#endif
+const char* const option_names[] = {
 	NNG_OPT_TLS_CONFIG,
 	NNG_OPT_TLS_AUTH_MODE,
 	NNG_OPT_TLS_CERT_KEY_FILE,
@@ -96,6 +101,6 @@ inline void set_opt_server_name( listener_view s, const char* v ) {
 	s.set_opt_string( to_name(option::server_name), v );
 }
 
-}
+}}
 
 #endif

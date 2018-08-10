@@ -2,7 +2,7 @@
 #define NNGPP_HTTP_RES_H
 #include "res_view.h"
 
-namespace nng::http {
+namespace nng { namespace http {
 
 struct res : res_view {
 	
@@ -51,6 +51,6 @@ struct res : res_view {
 
 };
 
-}
+}}
 
 #endif

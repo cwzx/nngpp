@@ -3,7 +3,7 @@
 #include <nngpp/socket.h>
 #include <nng/protocol/pubsub0/pub.h>
 
-namespace nng::pub {
+namespace nng { namespace pub {
 inline namespace v0 {
 
 inline socket open() {
@@ -25,6 +25,6 @@ inline socket open_raw() {
 }
 
 }
-}
+}}
 
 #endif

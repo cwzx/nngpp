@@ -3,7 +3,7 @@
 #include <nngpp/socket.h>
 #include <nng/protocol/reqrep0/rep.h>
 
-namespace nng::rep {
+namespace nng { namespace rep {
 inline namespace v0 {
 
 inline socket open() {
@@ -25,6 +25,6 @@ inline socket open_raw() {
 }
 
 }
-}
+}}
 
 #endif

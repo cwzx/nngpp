@@ -3,7 +3,7 @@
 #include <nngpp/socket.h>
 #include <nng/protocol/pair1/pair.h>
 
-namespace nng::pair {
+namespace nng { namespace pair {
 inline namespace v1 {
 
 inline socket open() {
@@ -30,7 +30,12 @@ enum class option {
 
 namespace detail {
 
-inline const char* const option_names[] = {
+#if __cpp_inline_variables >= 201606
+inline
+#else
+static
+#endif
+const char* const option_names[] = {
 	NNG_OPT_PAIR1_POLY
 };
 
@@ -49,6 +54,6 @@ inline void set_opt_poly( socket_view s, bool v ) {
 }
 
 }
-}
+}}
 
 #endif

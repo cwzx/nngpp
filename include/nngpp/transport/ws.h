@@ -8,7 +8,7 @@ extern "C" {
 #include <nng/transport/ws/websocket.h>
 }
 
-namespace nng::ws {
+namespace nng { namespace ws {
 
 inline void register_transport() {
 	int r = nng_ws_register();
@@ -24,7 +24,12 @@ enum class option {
 
 namespace detail {
 
-inline const char* const option_names[] = {
+#if __cpp_inline_variables >= 201606
+inline
+#else
+static
+#endif
+const char* const option_names[] = {
 	NNG_OPT_WS_REQUEST_HEADERS,
 	NNG_OPT_WS_RESPONSE_HEADERS
 };
@@ -51,6 +56,6 @@ inline void set_opt_response_headers( listener_view s, const char* v ) {
 	s.set_opt_string( to_name(option::response_headers), v );
 }
 
-}
+}}
 
 #endif

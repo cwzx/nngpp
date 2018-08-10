@@ -3,7 +3,7 @@
 #include <nngpp/view.h>
 #include "misc.h"
 
-namespace nng::http {
+namespace nng { namespace http {
 
 struct res_view {
 protected:
@@ -99,6 +99,6 @@ public:
 	}
 };
 
-}
+}}
 
 #endif

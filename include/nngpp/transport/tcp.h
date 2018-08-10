@@ -8,7 +8,7 @@ extern "C" {
 #include <nng/transport/tcp/tcp.h>
 }
 
-namespace nng::tcp {
+namespace nng { namespace tcp {
 
 inline void register_transport() {
 	int r = nng_tcp_register();
@@ -24,7 +24,12 @@ enum class option {
 
 namespace detail {
 
-inline const char* const option_names[] = {
+#if __cpp_inline_variables >= 201606
+inline
+#else
+static
+#endif
+const char* const option_names[] = {
 	NNG_OPT_TCP_NODELAY,  // bool
 	NNG_OPT_TCP_KEEPALIVE // bool
 };
@@ -91,6 +96,6 @@ inline void set_opt_keep_alive( socket_view s, bool v ) {
 	s.set_opt_bool( to_name(option::keep_alive), v );
 }
 
-}
+}}
 
 #endif

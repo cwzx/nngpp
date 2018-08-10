@@ -4,7 +4,7 @@
 #include "handler.h"
 #include "res_view.h"
 
-namespace nng::http {
+namespace nng { namespace http {
 
 struct server_view {
 protected:
@@ -92,6 +92,6 @@ public:
 	
 };
 
-}
+}}
 
 #endif

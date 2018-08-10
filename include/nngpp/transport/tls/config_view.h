@@ -3,7 +3,7 @@
 #include <nngpp/error.h>
 #include <nng/supplemental/tls/tls.h>
 
-namespace nng::tls {
+namespace nng { namespace tls {
 
 enum class mode {
 	client = NNG_TLS_MODE_CLIENT,
@@ -99,6 +99,6 @@ public:
 
 };
 
-}
+}}
 
 #endif

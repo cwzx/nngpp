@@ -1,6 +1,6 @@
 # nngpp
 
-C++17 wrapper around the [NNG](https://github.com/nanomsg/nng) API
+C++ wrapper around the [NNG](https://github.com/nanomsg/nng) API
 
 ## Features
 
@@ -10,6 +10,7 @@ C++17 wrapper around the [NNG](https://github.com/nanomsg/nng) API
 * Owning RAII classes, e.g. `nng::socket` and `nng::msg`
 * Non-owning views, e.g. `nng::socket_view` and `nng::msg_view`
 * Failure is communicated with exceptions instead of error codes
+* Compatible with C++11 but uses C++17 features when available
 
 ## Hello world
 
@@ -59,11 +60,6 @@ All 5 [nng demos](https://github.com/nanomsg/nng/tree/master/demo) have been por
 I have kept the original structure of the demos intact, just replacing the nng API with nngpp.
 This allows for easy comparison with the nng demos, but may mean they are non-idiomatic in places.
 See the `demo` directory.
-
-## Requirements
-
-* GCC 7+ / VS 2017 15.5+ / Clang 3.9+
-* NNG
 
 ## Design
 

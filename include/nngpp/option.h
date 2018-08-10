@@ -28,7 +28,12 @@ enum class option {
 
 namespace detail {
 
-inline const char* const option_names[] = {
+#if __cpp_inline_variables >= 201606
+inline
+#else
+static
+#endif
+const char* const option_names[] = {
 	NNG_OPT_SOCKNAME,
 	NNG_OPT_RAW,
 	NNG_OPT_PROTO,

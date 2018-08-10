@@ -2,7 +2,7 @@
 #define NNGPP_TLS_CONFIG_H
 #include "config_view.h"
 
-namespace nng::tls {
+namespace nng { namespace tls {
 
 struct config : config_view {
 	
@@ -44,6 +44,6 @@ struct config : config_view {
 
 };
 
-}
+}}
 
 #endif

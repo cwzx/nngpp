@@ -3,7 +3,7 @@
 #include <nngpp/socket.h>
 #include <nng/protocol/survey0/respond.h>
 
-namespace nng::respond {
+namespace nng { namespace respond {
 inline namespace v0 {
 
 inline socket open() {
@@ -25,6 +25,6 @@ inline socket open_raw() {
 }
 
 }
-}
+}}
 
 #endif

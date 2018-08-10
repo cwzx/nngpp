@@ -2,7 +2,7 @@
 #define NNGPP_HTTP_CONN_H
 #include "conn_view.h"
 
-namespace nng::http {
+namespace nng { namespace http {
 
 struct conn : conn_view {
 
@@ -37,6 +37,6 @@ struct conn : conn_view {
 
 };
 
-}
+}}
 
 #endif

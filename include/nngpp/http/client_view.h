@@ -4,7 +4,7 @@
 #include <nngpp/transport/tls/config_view.h>
 #include "misc.h"
 
-namespace nng::http {
+namespace nng { namespace http {
 
 struct client_view {
 protected:
@@ -49,6 +49,6 @@ public:
 
 };
 
-}
+}}
 
 #endif

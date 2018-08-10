@@ -3,7 +3,7 @@
 #include <nngpp/socket.h>
 #include <nng/protocol/pubsub0/sub.h>
 
-namespace nng::sub {
+namespace nng { namespace sub {
 inline namespace v0 {
 
 inline socket open() {
@@ -31,7 +31,12 @@ enum class option {
 
 namespace detail {
 
-inline const char* const option_names[] = {
+#if __cpp_inline_variables >= 201606
+inline
+#else
+static
+#endif
+const char* const option_names[] = {
 	NNG_OPT_SUB_SUBSCRIBE,
 	NNG_OPT_SUB_UNSUBSCRIBE
 };
@@ -51,6 +56,6 @@ inline void set_opt_unsubscribe( socket_view s, view v ) {
 }
 
 }
-}
+}}
 
 #endif

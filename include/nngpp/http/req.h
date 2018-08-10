@@ -2,7 +2,7 @@
 #define NNGPP_HTTP_REQ_H
 #include "req_view.h"
 
-namespace nng::http {
+namespace nng { namespace http {
 
 struct req : req_view {
 
@@ -44,6 +44,6 @@ struct req : req_view {
 
 };
 
-}
+}}
 
 #endif

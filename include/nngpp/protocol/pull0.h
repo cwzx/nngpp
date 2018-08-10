@@ -3,7 +3,7 @@
 #include <nngpp/socket.h>
 #include <nng/protocol/pipeline0/pull.h>
 
-namespace nng::pull {
+namespace nng { namespace pull {
 inline namespace v0 {
 
 inline socket open() {
@@ -25,6 +25,6 @@ inline socket open_raw() {
 }
 
 }
-}
+}}
 
 #endif

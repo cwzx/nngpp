@@ -2,7 +2,7 @@
 #define NNGPP_HTTP_HANDLER_H
 #include "handler_view.h"
 
-namespace nng::http {
+namespace nng { namespace http {
 
 struct path_type_file {};
 struct path_type_dir {};
@@ -68,6 +68,6 @@ struct handler : handler_view {
 
 };
 
-}
+}}
 
 #endif

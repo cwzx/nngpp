@@ -2,7 +2,7 @@
 #define NNGPP_HTTP_MISC_H
 #include <nng/supplemental/http/http.h>
 
-namespace nng::http {
+namespace nng { namespace http {
 
 enum class status {
 	continue_                = NNG_HTTP_STATUS_CONTINUE,
@@ -80,7 +80,12 @@ enum class verb {
 
 namespace detail {
 
-inline const char* const verb_name[] {
+#if __cpp_inline_variables >= 201606
+inline
+#else
+static
+#endif
+const char* const verb_name[] {
 	"GET",
 	"HEAD",
 	"POST",
@@ -98,6 +103,6 @@ inline const char* to_name( verb v ) noexcept {
 	return detail::verb_name[(int)v];
 }
 
-}
+}}
 
 #endif

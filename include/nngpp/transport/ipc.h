@@ -7,7 +7,7 @@ extern "C" {
 #include <nng/transport/ipc/ipc.h>
 }
 
-namespace nng::ipc {
+namespace nng { namespace ipc {
 
 inline void register_transport() {
 	int r = nng_ipc_register();
@@ -27,7 +27,12 @@ enum class option {
 
 namespace detail {
 
-inline const char* const option_names[] = {
+#if __cpp_inline_variables >= 201606
+inline
+#else
+static
+#endif
+const char* const option_names[] = {
 	NNG_OPT_IPC_PEER_UID,
 	NNG_OPT_IPC_PEER_GID,
 	NNG_OPT_IPC_PEER_PID,
@@ -66,6 +71,6 @@ inline void set_opt_security_descriptor( listener_view s, int v ) {
 	s.set_opt_int( to_name(option::security_descriptor), v );
 }
 
-}
+}}
 
 #endif
