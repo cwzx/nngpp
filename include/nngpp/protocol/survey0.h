@@ -30,7 +30,7 @@ enum class option {
 
 namespace detail {
 
-inline const char* option_names[] = {
+inline const char* const option_names[] = {
 	NNG_OPT_SURVEYOR_SURVEYTIME
 };
 

@@ -27,5 +27,4 @@ inline socket open_raw() {
 }
 }
 
-
 #endif

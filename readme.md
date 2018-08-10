@@ -60,6 +60,11 @@ I have kept the original structure of the demos intact, just replacing the nng A
 This allows for easy comparison with the nng demos, but may mean they are non-idiomatic in places.
 See the `demo` directory.
 
+## Requirements
+
+* GCC 7+ / VS 2017 15.5+ / Clang 3.9+
+* NNG
+
 ## Design
 
 The nng API consists of a number of conceptual objects, such as 'socket' and 'pipe'.

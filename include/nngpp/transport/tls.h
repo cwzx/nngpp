@@ -29,7 +29,7 @@ enum class option {
 
 namespace detail {
 
-inline const char* option_names[] = {
+inline const char* const option_names[] = {
 	NNG_OPT_TLS_CONFIG,
 	NNG_OPT_TLS_AUTH_MODE,
 	NNG_OPT_TLS_CERT_KEY_FILE,

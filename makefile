@@ -26,7 +26,13 @@ TEST_BIN = $(BIN_DIR)/test
 DEMO_FILES = $(shell echo $(DEMO_DIR)/*/*.cpp)
 DEMO_BINS = $(patsubst $(DEMO_DIR)/%.cpp,$(BIN_DIR)/%,$(DEMO_FILES))
 
+all: demo $(BIN_DIR)/perf $(TEST_BIN)
+
 $(BIN_DIR)/%: $(DEMO_DIR)/%.cpp
+	@mkdir -p $(dir $@)
+	$(CXX) $(INC_FLG) $(REL_FLG) -o $@ $^ $(LIB_FLG)
+
+$(BIN_DIR)/perf: $(BASE_DIR)/perf/perf.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(INC_FLG) $(REL_FLG) -o $@ $^ $(LIB_FLG)
 
@@ -40,6 +46,6 @@ test: $(TEST_BIN)
 	@$(TEST_BIN)
 
 clean:
-	@rm -rf $(TEST_BIN) $(DEMO_BINS)
+	@rm -rf $(TEST_BIN) $(DEMO_BINS) $(BIN_DIR)/perf
 
-.PHONY: demo test clean
+.PHONY: all demo test clean

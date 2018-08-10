@@ -24,7 +24,7 @@ enum class option {
 
 namespace detail {
 
-inline const char* option_names[] = {
+inline const char* const option_names[] = {
 	NNG_OPT_TCP_NODELAY,  // bool
 	NNG_OPT_TCP_KEEPALIVE // bool
 };

@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "async_server", "async_serve
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "async", "async", "{98290630-78EE-4CA3-8D09-A9F8CE75D6F1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "perf", "perf.vcxproj", "{824C049D-7290-492F-A685-F7DA2699FFAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -85,6 +87,14 @@ Global
 		{A4C5CAB1-2E53-4FA7-B99F-014218B1414B}.Release|x64.Build.0 = Release|x64
 		{A4C5CAB1-2E53-4FA7-B99F-014218B1414B}.Release|x86.ActiveCfg = Release|Win32
 		{A4C5CAB1-2E53-4FA7-B99F-014218B1414B}.Release|x86.Build.0 = Release|Win32
+		{824C049D-7290-492F-A685-F7DA2699FFAF}.Debug|x64.ActiveCfg = Debug|x64
+		{824C049D-7290-492F-A685-F7DA2699FFAF}.Debug|x64.Build.0 = Debug|x64
+		{824C049D-7290-492F-A685-F7DA2699FFAF}.Debug|x86.ActiveCfg = Debug|Win32
+		{824C049D-7290-492F-A685-F7DA2699FFAF}.Debug|x86.Build.0 = Debug|Win32
+		{824C049D-7290-492F-A685-F7DA2699FFAF}.Release|x64.ActiveCfg = Release|x64
+		{824C049D-7290-492F-A685-F7DA2699FFAF}.Release|x64.Build.0 = Release|x64
+		{824C049D-7290-492F-A685-F7DA2699FFAF}.Release|x86.ActiveCfg = Release|Win32
+		{824C049D-7290-492F-A685-F7DA2699FFAF}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

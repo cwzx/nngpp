@@ -27,7 +27,7 @@ enum class option {
 
 namespace detail {
 
-inline const char* option_names[] = {
+inline const char* const option_names[] = {
 	NNG_OPT_IPC_PEER_UID,
 	NNG_OPT_IPC_PEER_GID,
 	NNG_OPT_IPC_PEER_PID,

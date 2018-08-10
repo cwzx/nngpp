@@ -80,7 +80,7 @@ enum class verb {
 
 namespace detail {
 
-inline const char* verb_name[] {
+inline const char* const verb_name[] {
 	"GET",
 	"HEAD",
 	"POST",
