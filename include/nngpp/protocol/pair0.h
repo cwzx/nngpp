@@ -3,7 +3,7 @@
 #include <nngpp/socket.h>
 #include <nng/protocol/pair0/pair.h>
 
-namespace nng { namespace pair::v0 {
+namespace nng { namespace pair { namespace v0 {
 
 inline socket open() {
 	nng_socket s;
@@ -23,6 +23,6 @@ inline socket open_raw() {
 	return socket(s);
 }
 
-}}
+}}}
 
 #endif
