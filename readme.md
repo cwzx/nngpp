@@ -59,7 +59,7 @@ catch( const nng::exception& e ) {
 All 5 [nng demos](https://github.com/nanomsg/nng/tree/master/demo) have been ported to nngpp to illustrate the use of the library.
 I have kept the original structure of the demos intact, just replacing the nng API with nngpp.
 This allows for easy comparison with the nng demos, but may mean they are non-idiomatic in places.
-See the `demo` directory.
+See the [`demo`](tree/master/demo) directory.
 
 ## Design
 
