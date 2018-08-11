@@ -15,7 +15,11 @@ C++ wrapper around the [NNG](https://github.com/nanomsg/nng) API
 ## Hello world
 
 ```cpp
-try {
+#include <nngpp/nngpp.h>
+#include <nngpp/protocol/req0.h>
+#include <nngpp/protocol/rep0.h>
+
+int main() try {
 	// create a socket for the rep protocol
 	nng::socket rep_sock = nng::rep::open();
 	
@@ -47,6 +51,7 @@ catch( const nng::exception& e ) {
 	// who() is the name of the nng function that produced the error
 	// what() is a description of the error code
 	printf( "%s: %s\n", e.who(), e.what() );
+	return 1;
 }
 // req_buf is freed
 // rep_buf is freed
