@@ -47,6 +47,10 @@ struct thread : thread_view {
 
 };
 
+inline thread make_thread( void(*f)(void*), void* arg ) {
+	return thread(f,arg);
+}
+
 }
 
 #endif

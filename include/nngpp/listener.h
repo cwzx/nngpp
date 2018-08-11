@@ -6,18 +6,20 @@
 namespace nng {
 
 struct listener : listener_view {
+
+	listener() = default;
 	
-	explicit listener( nng_listener lid ) noexcept : listener_view(lid) {}
+	explicit listener( nng_listener lis ) noexcept : listener_view(lis) {}
 	
 	explicit listener( socket_view s, const char* addr, int flags ) {
-		int r = nng_listen( s.get(), addr, &lid, flags );
+		int r = nng_listen( s.get(), addr, &lis, flags );
 		if( r != 0 ) {
 			throw exception(r,"nng_listen");
 		}
 	}
 	
 	explicit listener( socket_view s, const char* addr ) {
-		int r = nng_listener_create( &lid, s.get(), addr );
+		int r = nng_listener_create( &lis, s.get(), addr );
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_create");
 		}
@@ -25,37 +27,45 @@ struct listener : listener_view {
 	
 	listener( const listener& rhs ) = delete;
 	
-	listener( listener&& rhs ) noexcept : listener_view(rhs.lid) {
-		rhs.lid.id = 0;
+	listener( listener&& rhs ) noexcept : listener_view(rhs.lis) {
+		rhs.lis.id = 0;
 	}
 	
 	listener& operator=( const listener& rhs ) = delete;
 	
 	listener& operator=( listener&& rhs ) {
 		if( this != &rhs ) {
-			if( lid.id != 0 ) {
-				int r = nng_listener_close(lid);
+			if( lis.id != 0 ) {
+				int r = nng_listener_close(lis);
 				if( r != 0 && r != (int)nng::error::closed ) {
 					throw exception(r,"nng_listener_close");
 				}
 			}
-			lid = rhs.lid;
-			rhs.lid.id = 0;
+			lis = rhs.lis;
+			rhs.lis.id = 0;
 		}
 		return *this;
 	}
 	
 	~listener() {
-		if( lid.id != 0 ) nng_listener_close(lid);
+		if( lis.id != 0 ) nng_listener_close(lis);
 	}
 
 	nng_listener release() noexcept {
-		auto out = lid;
-		lid.id = 0;
+		auto out = lis;
+		lis.id = 0;
 		return out;
 	}
 
 };
+
+inline listener make_listener( socket_view s, const char* addr, int flags ) {
+	return listener(s,addr,flags);
+}
+
+inline listener make_listener( socket_view s, const char* addr ) {
+	return listener(s,addr);
+}
 
 }
 

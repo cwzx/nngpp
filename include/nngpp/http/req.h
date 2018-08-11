@@ -1,10 +1,13 @@
 #ifndef NNGPP_HTTP_REQ_H
 #define NNGPP_HTTP_REQ_H
 #include "req_view.h"
+#include <nngpp/url_view.h>
 
 namespace nng { namespace http {
 
 struct req : req_view {
+
+	req() = default;
 
 	explicit req( nng_http_req* q ) noexcept : req_view(q) {}
 	
@@ -43,6 +46,10 @@ struct req : req_view {
 	}
 
 };
+
+inline req make_req( url_view u ) {
+	return req(u);
+}
 
 }}
 

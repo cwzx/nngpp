@@ -6,6 +6,8 @@
 namespace nng {
 
 struct ctx : ctx_view {
+
+	ctx() = default;
 	
 	explicit ctx( nng_ctx c ) noexcept : ctx_view(c) {}
 	
@@ -49,6 +51,10 @@ struct ctx : ctx_view {
 	}
 	
 };
+
+inline ctx make_ctx( socket_view s ) {
+	return ctx(s);
+}
 
 }
 

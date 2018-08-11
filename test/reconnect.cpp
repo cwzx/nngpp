@@ -24,7 +24,7 @@ TEST_CASE("Reconnect works","[reconnect]") {
 		SECTION("We can send a frame") {
 			nng::msleep(100);
 
-			nng::msg msg((size_t)0);
+			auto msg = nng::make_msg(0);
 			REQUIRE(msg);
 			msg.body().append("hello");
 			REQUIRE_NOTHROW( push.send( std::move(msg) ) );
@@ -56,7 +56,7 @@ TEST_CASE("Reconnect works","[reconnect]") {
 			nng::pipe_view p1;
 			nng::msleep(100);
 			{
-				nng::msg msg((size_t)0);
+				auto msg = nng::make_msg(0);
 				REQUIRE(msg);
 				msg.body().append("hello");
 				REQUIRE_NOTHROW( push.send( std::move(msg) ) );
@@ -71,7 +71,7 @@ TEST_CASE("Reconnect works","[reconnect]") {
 				nng_pipe_close(p1.get());
 				nng::msleep(100);
 				{
-					nng::msg msg((size_t)0);
+					auto msg = nng::make_msg(0);
 					REQUIRE(msg);
 					msg.body().append("again");
 					REQUIRE_NOTHROW( push.send( std::move(msg) ) );

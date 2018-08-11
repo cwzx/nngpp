@@ -7,7 +7,7 @@ namespace nng { namespace http {
 
 struct req_view {
 protected:
-	nng_http_req* q;
+	nng_http_req* q = nullptr;
 	
 public:
 	req_view() = default;

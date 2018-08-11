@@ -7,7 +7,7 @@ namespace nng {
 
 struct mtx_view {
 protected:
-	nng_mtx* m;
+	nng_mtx* m = nullptr;
 	
 public:
 	mtx_view() = default;
@@ -18,20 +18,20 @@ public:
 		return m;
 	}
 
-	void lock() const noexcept {
-		nng_mtx_lock(m);
-	}
-
-	void unlock() const noexcept {
-		nng_mtx_unlock(m);
-	}
-
 	nng_mtx* operator->() const noexcept {
 		return m;
 	}
 
 	explicit operator bool() const noexcept {
 		return m != nullptr;
+	}
+
+	void lock() const noexcept {
+		nng_mtx_lock(m);
+	}
+
+	void unlock() const noexcept {
+		nng_mtx_unlock(m);
 	}
 
 };

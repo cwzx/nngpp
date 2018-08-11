@@ -8,7 +8,7 @@ namespace {
 struct notifyarg {
 	int          did = 0;
 	nng_duration when = 0;
-	nng::mtx     mx;
+	nng::mtx     mx = nng::make_mtx();
 	nng::cv      cv{mx};
 };
 
@@ -24,7 +24,7 @@ static void notifyafter(void* arg) {
 }
 
 TEST_CASE("We can lock and unlock a mutex","[synch]") {
-	nng::mtx mx;
+	auto mx = nng::make_mtx();
 	mx.lock();
 	REQUIRE(1);
 	mx.unlock();

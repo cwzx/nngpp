@@ -6,6 +6,8 @@ namespace nng {
 
 struct pipe : pipe_view {
 
+	pipe() = default;
+
 	explicit pipe( nng_pipe p ) noexcept : pipe_view(p) {}
 	
 	pipe( const pipe& rhs ) = delete;

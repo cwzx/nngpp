@@ -48,7 +48,7 @@ TEST_CASE("PAIRv1 device","[device]") {
 			nng::msleep(100);
 			SECTION("Device can send and receive") {
 				{
-					nng::msg msg((size_t)0);
+					auto msg = nng::make_msg(0);
 					REQUIRE(msg);
 
 					msg.body().append("ALPHA");
@@ -57,7 +57,7 @@ TEST_CASE("PAIRv1 device","[device]") {
 					REQUIRE( msg.body().get() == "ALPHA" );
 				}
 				{
-					nng::msg msg((size_t)0);
+					auto msg = nng::make_msg(0);
 					REQUIRE(msg);
 
 					msg.body().append("OMEGA");

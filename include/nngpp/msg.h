@@ -6,6 +6,8 @@ namespace nng {
 
 struct msg : msg_view {
 
+	msg() = default;
+
 	explicit msg( nng_msg* m ) noexcept : msg_view(m) {}
 	
 	explicit msg( size_t size ) {
@@ -57,6 +59,10 @@ struct msg : msg_view {
 	}
 
 };
+
+inline msg make_msg( size_t size ) {
+	return msg(size);
+}
 
 }
 

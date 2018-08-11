@@ -7,83 +7,83 @@ namespace nng {
 
 struct listener_view {
 protected:
-	nng_listener lid{0};
+	nng_listener lis{0};
 	
 public:
 	listener_view() = default;
 	
-	listener_view( nng_listener lid ) noexcept : lid(lid) {}
+	listener_view( nng_listener lis ) noexcept : lis(lis) {}
 	
 	nng_listener get() const noexcept {
-		return lid;
+		return lis;
 	}
 	
 	explicit operator bool() const noexcept {
-		return lid.id != 0;
+		return lis.id != 0;
 	}
 	
 	void start( int flags = 0 ) const {
-		int r = nng_listener_start(lid,flags);
+		int r = nng_listener_start(lis,flags);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_start");
 		}
 	}
 	
 	int id() const noexcept {
-		return nng_listener_id(lid);
+		return nng_listener_id(lis);
 	}
 	
 	void set_opt( const char* name, view v ) const {
-		int r = nng_listener_setopt(lid,name,v.data(),v.size());
+		int r = nng_listener_setopt(lis,name,v.data(),v.size());
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_setopt");
 		}
 	}
 	
 	void set_opt_bool( const char* name, bool value ) const {
-		int r = nng_listener_setopt_bool(lid,name,value);
+		int r = nng_listener_setopt_bool(lis,name,value);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_setopt_bool");
 		}
 	}
 	
 	void set_opt_int( const char* name, int value ) const {
-		int r = nng_listener_setopt_int(lid,name,value);
+		int r = nng_listener_setopt_int(lis,name,value);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_setopt_int");
 		}
 	}
 	
 	void set_opt_ms( const char* name, nng_duration value ) const {
-		int r = nng_listener_setopt_ms(lid,name,value);
+		int r = nng_listener_setopt_ms(lis,name,value);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_setopt_ms");
 		}
 	}
 	
 	void set_opt_size( const char* name, size_t value ) const {
-		int r = nng_listener_setopt_size(lid,name,value);
+		int r = nng_listener_setopt_size(lis,name,value);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_setopt_size");
 		}
 	}
 	
 	void set_opt_uint64( const char* name, uint64_t value ) const {
-		int r = nng_listener_setopt_uint64(lid,name,value);
+		int r = nng_listener_setopt_uint64(lis,name,value);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_setopt_uint64");
 		}
 	}
 	
 	void set_opt_string( const char* name, const char* value ) const {
-		int r = nng_listener_setopt_string(lid,name,value);
+		int r = nng_listener_setopt_string(lis,name,value);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_setopt_string");
 		}
 	}
 	
 	void set_opt_ptr( const char* name, void* value ) const {
-		int r = nng_listener_setopt_ptr(lid,name,value);
+		int r = nng_listener_setopt_ptr(lis,name,value);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_setopt_ptr");
 		}
@@ -91,7 +91,7 @@ public:
 	
 	size_t get_opt( const char* name, buffer& out ) const {
 		size_t size = out.size();
-		int r = nng_listener_getopt(lid,name,out.data(),&size);
+		int r = nng_listener_getopt(lis,name,out.data(),&size);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_getopt");
 		}
@@ -100,7 +100,7 @@ public:
 
 	bool get_opt_bool( const char* name ) const {
 		bool out;
-		int r = nng_listener_getopt_bool(lid,name,&out);
+		int r = nng_listener_getopt_bool(lis,name,&out);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_getopt_bool");
 		}
@@ -109,7 +109,7 @@ public:
 	
 	int get_opt_int( const char* name ) const {
 		int out;
-		int r = nng_listener_getopt_int(lid,name,&out);
+		int r = nng_listener_getopt_int(lis,name,&out);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_getopt_int");
 		}
@@ -118,7 +118,7 @@ public:
 	
 	nng_duration get_opt_ms( const char* name ) const {
 		nng_duration out;
-		int r = nng_listener_getopt_ms(lid,name,&out);
+		int r = nng_listener_getopt_ms(lis,name,&out);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_getopt_ms");
 		}
@@ -127,7 +127,7 @@ public:
 	
 	size_t get_opt_size( const char* name ) const {
 		size_t out;
-		int r = nng_listener_getopt_size(lid,name,&out);
+		int r = nng_listener_getopt_size(lis,name,&out);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_getopt_size");
 		}
@@ -136,7 +136,7 @@ public:
 	
 	nng_sockaddr get_opt_sockaddr( const char* name ) const {
 		nng_sockaddr out;
-		int r = nng_listener_getopt_sockaddr(lid,name,&out);
+		int r = nng_listener_getopt_sockaddr(lis,name,&out);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_getopt_sockaddr");
 		}
@@ -145,7 +145,7 @@ public:
 
 	uint64_t get_opt_uint64( const char* name ) const {
 		uint64_t out;
-		int r = nng_listener_getopt_uint64(lid,name,&out);
+		int r = nng_listener_getopt_uint64(lis,name,&out);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_getopt_uint64");
 		}
@@ -154,7 +154,7 @@ public:
 	
 	void* get_opt_ptr( const char* name ) const {
 		void* out;
-		int r = nng_listener_getopt_ptr(lid,name,&out);
+		int r = nng_listener_getopt_ptr(lis,name,&out);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_getopt_ptr");
 		}
@@ -163,7 +163,7 @@ public:
 	
 	buffer get_opt_string( const char* name ) const {
 		char* data;
-		int r = nng_listener_getopt_string(lid,name,&data);
+		int r = nng_listener_getopt_string(lis,name,&data);
 		if( r != 0 ) {
 			throw exception(r,"nng_listener_getopt_string");
 		}

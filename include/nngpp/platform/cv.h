@@ -6,6 +6,8 @@
 namespace nng {
 
 struct cv : cv_view {
+
+	cv() = default;
 	
 	explicit cv( nng_cv* c ) noexcept : cv_view(c) {}
 	
@@ -44,6 +46,10 @@ struct cv : cv_view {
 	}
 
 };
+
+inline cv make_cv( mtx_view mut ) {
+	return cv(mut);
+}
 
 }
 

@@ -28,7 +28,7 @@ TEST_CASE("HTTP Client","[httpclient]") {
 
 			nng::http::req req(url);
 			REQUIRE(req);
-			nng::http::res res;
+			auto res = nng::http::make_res();
 			REQUIRE(res);
 
 			http.write(req,aio);

@@ -6,6 +6,8 @@
 namespace nng {
 
 struct dialer : dialer_view {
+
+	dialer() = default;
 	
 	explicit dialer( nng_dialer d ) noexcept : dialer_view(d) {}
 	
@@ -56,6 +58,14 @@ struct dialer : dialer_view {
 	}
 
 };
+
+inline dialer make_dialer( socket_view s, const char* addr, int flags ) {
+	return dialer(s,addr,flags);
+}
+
+inline dialer make_dialer( socket_view s, const char* addr ) {
+	return dialer(s,addr);
+}
 
 }
 

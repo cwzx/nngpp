@@ -14,8 +14,8 @@
 #define SERVER "server"
 #define DATECMD 1
 
-#define PUT64(ptr, u)                                \
-	do {                                             \
+#define PUT64(ptr, u) \
+	do { \
 		(ptr)[0] = (uint8_t)(((uint64_t)(u)) >> 56); \
 		(ptr)[1] = (uint8_t)(((uint64_t)(u)) >> 48); \
 		(ptr)[2] = (uint8_t)(((uint64_t)(u)) >> 40); \
@@ -23,10 +23,10 @@
 		(ptr)[4] = (uint8_t)(((uint64_t)(u)) >> 24); \
 		(ptr)[5] = (uint8_t)(((uint64_t)(u)) >> 16); \
 		(ptr)[6] = (uint8_t)(((uint64_t)(u)) >>  8); \
-		(ptr)[7] = (uint8_t)((uint64_t)(u));         \
-	} while (0)
+		(ptr)[7] = (uint8_t)((uint64_t)(u)); \
+	} while(0)
 
-#define GET64(ptr, v)                             \
+#define GET64(ptr, v) \
 	v = (((uint64_t)((uint8_t)(ptr)[0])) << 56) + \
 	    (((uint64_t)((uint8_t)(ptr)[1])) << 48) + \
 	    (((uint64_t)((uint8_t)(ptr)[2])) << 40) + \
@@ -40,7 +40,7 @@ void showdate(time_t now) {
 	printf("%s", asctime(localtime(&now)));
 }
 
-int server(const char* url) {
+void server(const char* url) {
 	auto sock = nng::rep::open();
 	sock.listen(url);
 	while(true) {
@@ -59,7 +59,7 @@ int server(const char* url) {
 	}
 }
 
-int client(const char* url) {
+void client(const char* url) {
 	auto sock = nng::req::open();
 	sock.dial(url);
 
@@ -79,16 +79,18 @@ int client(const char* url) {
 	} else {
 		printf("CLIENT: GOT WRONG SIZE!\n");
 	}
-
-	return 0;
 }
 
 int main( int argc, char** argv ) try {
-	if(argc > 1 && strcmp(CLIENT, argv[1]) == 0)
-		return client(argv[2]);
+	if(argc > 1 && strcmp(CLIENT, argv[1]) == 0) {
+		client(argv[2]);
+		return 0;
+	}
 
-	if(argc > 1 && strcmp(SERVER, argv[1]) == 0)
-		return server(argv[2]);
+	if(argc > 1 && strcmp(SERVER, argv[1]) == 0) {
+		server(argv[2]);
+		return 0;
+	}
 
 	fprintf(stderr, "Usage: reqrep %s|%s <URL> ...\n", CLIENT, SERVER);
 	return 1;

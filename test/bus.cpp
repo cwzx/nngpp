@@ -36,7 +36,7 @@ TEST_CASE("BUS pattern","[bus]") {
 			REQUIRE_THROWS_WITH( bus3.recv_msg(), expected_error );
 			
 			{
-				nng::msg msg((size_t)0);
+				auto msg = nng::make_msg(0);
 				REQUIRE(msg);
 
 				msg.body().append("99bits");
@@ -47,7 +47,7 @@ TEST_CASE("BUS pattern","[bus]") {
 				REQUIRE_THROWS_WITH( msg = bus3.recv_msg(), expected_error );
 			}
 			{
-				nng::msg msg((size_t)0);
+				auto msg = nng::make_msg(0);
 				REQUIRE(msg);
 
 				msg.body().append("onthe");

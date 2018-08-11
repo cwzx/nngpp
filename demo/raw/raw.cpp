@@ -27,7 +27,7 @@ struct work {
 	enum { INIT, RECV, WAIT, SEND } state = INIT;
 	nng::aio aio{ server_cb, this };
 	nng::socket_view sock;
-	nng::msg msg{nullptr};
+	nng::msg msg;
 
 	explicit work( nng::socket_view sock ) : sock(sock) {}
 };
@@ -87,7 +87,7 @@ void server_cb(void* arg) {
 }
 
 // The server runs forever.
-int server(const char* url) {
+void server(const char* url) {
 
 	//  Create the socket.
 	auto sock = nng::rep::open_raw();
@@ -106,19 +106,18 @@ int server(const char* url) {
 	while(true) {
 		nng::msleep(3'600'000); // neither pause() nor sleep() portable
 	}
-	return 0;
 }
 
 //  The client runs just once, and then returns.
-int client(const char* url, const char* msecstr) {
+void client(const char* url, const char* msecstr) {
 	auto msec = atoi(msecstr) * 1000;
 
 	auto sock = nng::req::open();
 	sock.dial(url);
 	
 	auto start = nng::clock();
-
-	auto msg = nng::msg((size_t)0);
+	
+	auto msg = nng::make_msg(0);
 	msg.body().append_u32(msec);
 	sock.send( std::move(msg) );
 	msg = sock.recv_msg();
@@ -126,22 +125,19 @@ int client(const char* url, const char* msecstr) {
 	auto end = nng::clock();
 
 	printf("Request took %u milliseconds.\n", (uint32_t)(end - start));
-	return 0;
 }
 
 int main(int argc, char** argv) try {
-	int rc;
-
-	if (argc < 3) {
+	if(argc < 3) {
 		fprintf(stderr, "Usage: %s <url> [-s|<secs>]\n", argv[0]);
 		return 1;
 	}
-	if (strcmp(argv[2], "-s") == 0) {
-		rc = server(argv[1]);
-	} else {
-		rc = client(argv[1], argv[2]);
+	if(strcmp(argv[2], "-s") == 0) {
+		server(argv[1]);
 	}
-	return rc == 0 ? 0 : 1;
+	else {
+		client(argv[1], argv[2]);
+	}
 }
 catch( const nng::exception& e ) {
 	fprintf(stderr, "%s: %s\n", e.who(), e.what());

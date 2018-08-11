@@ -8,27 +8,27 @@ uint8_t dat123[] = { 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 3 };
 }
 
 TEST_CASE("Lengths are empty","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	REQUIRE(msg.body().size() == 0);
 	REQUIRE(msg.header().size() == 0);
 }
 
 TEST_CASE("We can append to the header","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	REQUIRE_NOTHROW(msg.header().append( "pad" ));
 	REQUIRE(msg.header().size() == 4);
 	REQUIRE(msg.header().get() == "pad");
 }
 
 TEST_CASE("We can append to the body","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	REQUIRE_NOTHROW(msg.body().append( "123" ));
 	REQUIRE(msg.body().size() == 4);
 	REQUIRE(msg.body().get() == "123");
 }
 
 TEST_CASE("We can delete from the header front","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	REQUIRE_NOTHROW(msg.header().append( "def" ));
 	REQUIRE_NOTHROW(msg.header().insert( {"abc",3} ));
 	REQUIRE(msg.header().size() == 7);
@@ -39,7 +39,7 @@ TEST_CASE("We can delete from the header front","[message]") {
 }
 
 TEST_CASE("We can delete from the header back","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	REQUIRE_NOTHROW(msg.header().append( "def" ));
 	REQUIRE_NOTHROW(msg.header().insert( {"abc",3} ));
 	REQUIRE(msg.header().size() == 7);
@@ -50,7 +50,7 @@ TEST_CASE("We can delete from the header back","[message]") {
 }
 
 TEST_CASE("We can delete from the body front","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	REQUIRE_NOTHROW(msg.body().append( "xyz" ));
 	REQUIRE_NOTHROW(msg.body().insert( {"uvw",3} ));
 	REQUIRE(msg.body().size() == 7);
@@ -61,7 +61,7 @@ TEST_CASE("We can delete from the body front","[message]") {
 }
 
 TEST_CASE("We can delete from the body back","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	REQUIRE_NOTHROW(msg.body().append( "xyz" ));
 	REQUIRE_NOTHROW(msg.body().insert( {"uvw",3} ));
 	REQUIRE(msg.body().size() == 7);
@@ -72,7 +72,7 @@ TEST_CASE("We can delete from the body back","[message]") {
 }
 
 TEST_CASE("Clearing the header works","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	REQUIRE_NOTHROW(msg.header().append( "bogus" ));
 	REQUIRE(msg.header().size() == 6);
 	REQUIRE_NOTHROW(msg.header().clear());
@@ -80,7 +80,7 @@ TEST_CASE("Clearing the header works","[message]") {
 }
 
 TEST_CASE("Clearing the body works","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	REQUIRE_NOTHROW(msg.body().append( "bogus" ));
 	REQUIRE(msg.body().size() == 6);
 	REQUIRE_NOTHROW(msg.body().clear());
@@ -88,7 +88,7 @@ TEST_CASE("Clearing the body works","[message]") {
 }
 
 TEST_CASE("We cannot delete more header than exists","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	REQUIRE_NOTHROW(msg.header().append( "short" ));
 	REQUIRE(msg.header().size() == 6);
 	REQUIRE_THROWS_WITH(
@@ -105,7 +105,7 @@ TEST_CASE("We cannot delete more header than exists","[message]") {
 }
 
 TEST_CASE("We cannot delete more body than exists","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	REQUIRE_NOTHROW(msg.body().append( "short" ));
 	REQUIRE(msg.body().size() == 6);
 	REQUIRE_THROWS_WITH(
@@ -122,7 +122,7 @@ TEST_CASE("We cannot delete more body than exists","[message]") {
 }
 
 TEST_CASE("Pipe retrievals work","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	nng::pipe_view p0;
 
 	REQUIRE(p0.id() < 0);
@@ -136,7 +136,7 @@ TEST_CASE("Pipe retrievals work","[message]") {
 }
 
 TEST_CASE("Message realloc works","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	REQUIRE_NOTHROW(msg.body().append( "abc" ));
 	REQUIRE_NOTHROW(msg.realloc( 1500 ));
 	REQUIRE(msg.body().size() == 1500);
@@ -150,7 +150,7 @@ TEST_CASE("Message realloc works","[message]") {
 }
 
 TEST_CASE("Inserting a lot of data works","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	char chunk[1024];
 	memset(chunk, '+', sizeof(chunk));
 			
@@ -168,7 +168,7 @@ TEST_CASE("Inserting a lot of data works","[message]") {
 }
 
 TEST_CASE("Message dup works","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 			
 	REQUIRE_NOTHROW(msg.header().append( "front" ));
 	REQUIRE_NOTHROW(msg.body().append( "back" ));
@@ -196,7 +196,7 @@ TEST_CASE("Message dup works","[message]") {
 }
 
 TEST_CASE("Missing option fails properly","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 	nng::buffer out(128);
 	REQUIRE_THROWS_WITH(
 		msg.get_opt(4545, out),
@@ -205,7 +205,7 @@ TEST_CASE("Missing option fails properly","[message]") {
 }
 
 TEST_CASE("Uint32 body operations work","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 
 	REQUIRE_NOTHROW(msg.body().append_u32(2));
 	REQUIRE_NOTHROW(msg.body().insert_u32(1));
@@ -247,7 +247,7 @@ TEST_CASE("Uint32 body operations work","[message]") {
 }
 
 TEST_CASE("Uint32 header operations work","[message]") {
-	nng::msg msg( (size_t)0 );
+	auto msg = nng::make_msg(0);
 
 	REQUIRE_NOTHROW(msg.header().append_u32(2));
 	REQUIRE_NOTHROW(msg.header().insert_u32(1));

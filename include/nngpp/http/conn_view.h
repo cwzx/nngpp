@@ -8,7 +8,7 @@ namespace nng { namespace http {
 
 struct conn_view {
 protected:
-	nng_http_conn* n;
+	nng_http_conn* n = nullptr;
 	
 public:
 	conn_view() = default;

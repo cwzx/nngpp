@@ -5,6 +5,8 @@
 namespace nng { namespace tls {
 
 struct config : config_view {
+
+	config() = default;
 	
 	explicit config( nng_tls_config* c ) noexcept : config_view(c) {}
 	
@@ -43,6 +45,10 @@ struct config : config_view {
 	}
 
 };
+
+inline config make_config( mode mode ) {
+	return config(mode);
+}
 
 }}
 

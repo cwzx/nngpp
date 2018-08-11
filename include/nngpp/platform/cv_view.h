@@ -7,7 +7,7 @@ namespace nng {
 
 struct cv_view {
 protected:
-	nng_cv* c;
+	nng_cv* c = nullptr;
 	
 public:
 	cv_view() = default;
@@ -16,6 +16,14 @@ public:
 
 	nng_cv* get() const noexcept {
 		return c;
+	}
+
+	nng_cv* operator->() const noexcept {
+		return c;
+	}
+
+	explicit operator bool() const noexcept {
+		return c != nullptr;
 	}
 
 	void wait() const noexcept {
@@ -39,14 +47,6 @@ public:
 
 	void wake_one() const noexcept {
 		nng_cv_wake1(c);
-	}
-
-	nng_cv* operator->() const noexcept {
-		return c;
-	}
-
-	explicit operator bool() const noexcept {
-		return c != nullptr;
 	}
 
 };

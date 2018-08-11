@@ -6,6 +6,8 @@
 namespace nng { namespace http {
 
 struct client : client_view {
+
+	client() = default;
 	
 	explicit client( nng_http_client* c ) noexcept : client_view(c) {}
 	
@@ -44,6 +46,10 @@ struct client : client_view {
 	}
 
 };
+
+inline client make_client( url_view u ) {
+	return client(u);
+}
 
 }}
 

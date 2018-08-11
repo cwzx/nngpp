@@ -6,6 +6,8 @@ namespace nng {
 
 struct url : url_view {
 
+	url() = default;
+
 	explicit url( nng_url* u ) noexcept : url_view(u) {}
 	
 	explicit url( const char* str ) {
@@ -57,6 +59,10 @@ struct url : url_view {
 	}
 
 };
+
+inline url make_url( const char* str ) {
+	return url(str);
+}
 
 }
 

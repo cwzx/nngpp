@@ -5,15 +5,10 @@
 namespace nng { namespace http {
 
 struct res : res_view {
+
+	res() = default;
 	
 	explicit res( nng_http_res* s ) noexcept : res_view(s) {}
-	
-	explicit res() {
-		int r = nng_http_res_alloc( &s );
-		if( r != 0 ) {
-			throw exception(r,"nng_http_res_alloc");
-		}
-	}
 	
 	explicit res( status code ) {
 		int r = nng_http_res_alloc_error( &s, (uint16_t)code );
@@ -50,6 +45,19 @@ struct res : res_view {
 	}
 
 };
+
+inline res make_res() {
+	nng_http_res* s;
+	int r = nng_http_res_alloc( &s );
+	if( r != 0 ) {
+		throw exception(r,"nng_http_res_alloc");
+	}
+	return res(s);
+}
+
+inline res make_res( status code ) {
+	return res(code);
+}
 
 }}
 

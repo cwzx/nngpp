@@ -6,6 +6,8 @@
 namespace nng { namespace http {
 
 struct server : server_view {
+
+	server() = default;
 	
 	explicit server( nng_http_server* s ) noexcept : server_view(s) {}
 	
@@ -44,6 +46,10 @@ struct server : server_view {
 	}
 
 };
+
+inline server make_server( url_view u ) {
+	return server(u);
+}
 
 }}
 

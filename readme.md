@@ -69,18 +69,36 @@ Each of these is identified and referred to by a handle, which is typically eith
 In nngpp these handles are wrapped in *views* that expose all of the corresponding functionality as member functions.
 For example, the `nng_socket` handle is wrapped by a `nng::socket_view` that has the member function `dial()`, which calls the nng function `nng_dial()`.
 All views provide a common set of member functions:
-* `get()` -- get the underlying handle
+* default constructor of null handle
+* implicit construction from a given handle
+* `get()` -- get the handle
 * `operator->()` (for pointer handles) -- access to the handle's members
 * `operator bool()` -- test for the presence of a non-null handle
 
 Most of these conceptual objects are also *resources*, i.e. they must be acquired and released.
 To manage the ownership of these resources, nngpp provides RAII classes, such as `nng::socket`.
-Each RAII class is an extension of the corresponding view type that gives:
-* constructors -- take ownership of a given handle or acquire a new one
+Each RAII class is an extension of the corresponding view and has the following:
+* default constructor of null handle
+* explicit construction from a given handle
+* specific constructors -- acquire a new handle using the given arguments
 * destructor -- release the resource (if held)
 * move -- transfer ownership to another instance
 * copy (if possible) -- duplicate the resource
 * `release()` -- get the underlying handle, detaching its ownership from the object
+
+In addition to constructors, there are make functions:
+```cpp
+auto msg1 = nng::make_msg(32);  // acquire using make function
+ 
+nng::msg msg2(32);              // acquire using constructor
+```
+
+The make function is needed to acquire with zero arguments, e.g.
+```cpp
+auto mtx1 = nng::make_mtx();  // acquire new mutex
+ 
+nng::mtx mtx2;                // default constructor gives null mutex
+```
 
 ### Summary
 

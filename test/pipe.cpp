@@ -8,11 +8,11 @@
 namespace {
 
 struct testcase {
-	nng::mtx lk;
+	nng::mtx lk = nng::make_mtx();
 	nng::cv cv{ lk };
 	nng::socket s;
-	nng::dialer d{ {} };
-	nng::listener l{ {} };
+	nng::dialer d;
+	nng::listener l;
 	nng::pipe_view p;
 	int add_pre = 0;
 	int add_post = 0;
@@ -134,7 +134,7 @@ TEST_CASE("Pipe notify works","[pipe]") {
 			REQUIRE(expect(&push, &push.err, 0));
 
 			SECTION("We can send a frame") {
-				nng::msg msg( (size_t)0 );
+				auto msg = nng::make_msg(0);
 				msg.body().append("hello");
 				push.s.send( std::move(msg) );
 				msg = pull.s.recv_msg();
@@ -162,7 +162,7 @@ TEST_CASE("Pipe notify works","[pipe]") {
 					nng::msleep(200);
 					nng::pipe_view p1;
 					{
-						nng::msg msg( (size_t)0 );
+						auto msg = nng::make_msg(0);
 						msg.body().append("hello");
 						push.s.send( std::move(msg) );
 						msg = pull.s.recv_msg();

@@ -6,6 +6,8 @@ namespace nng {
 
 struct aio : aio_view {
 
+	aio() = default;
+
 	explicit aio( nng_aio* a ) noexcept : aio_view(a) {}
 	
 	explicit aio( void (*cb)(void*), void* arg ) {
@@ -43,6 +45,10 @@ struct aio : aio_view {
 	}
 
 };
+
+inline aio make_aio( void (*cb)(void*), void* arg ) {
+	return aio(cb,arg);
+}
 
 }
 

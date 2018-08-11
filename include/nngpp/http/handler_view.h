@@ -7,7 +7,7 @@ namespace nng { namespace http {
 
 struct handler_view {
 protected:
-	nng_http_handler* h;
+	nng_http_handler* h = nullptr;
 	
 public:
 	handler_view() = default;

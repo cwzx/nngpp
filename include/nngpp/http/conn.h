@@ -6,6 +6,8 @@ namespace nng { namespace http {
 
 struct conn : conn_view {
 
+	conn() = default;
+
 	explicit conn( nng_http_conn* n ) noexcept : conn_view(n) {}
 	
 	conn( const conn& rhs ) = delete;

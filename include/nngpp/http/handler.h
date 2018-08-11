@@ -8,6 +8,8 @@ struct path_type_file {};
 struct path_type_dir {};
 
 struct handler : handler_view {
+
+	handler() = default;
 	
 	explicit handler( nng_http_handler* h ) noexcept : handler_view(h) {}
 	
@@ -67,6 +69,22 @@ struct handler : handler_view {
 	}
 
 };
+
+inline handler make_handler( const char* uri, void (*cb)(nng_aio*) ) {
+	return handler(uri,cb);
+}
+
+inline handler make_handler( const char* uri, const char* path, path_type_file path_type ) {
+	return handler(uri,path,path_type);
+}
+
+inline handler make_handler( const char* uri, const char* path, path_type_dir path_type ) {
+	return handler(uri,path,path_type);
+}
+
+inline handler make_handler( const char* uri, const void* data, size_t size, const char* ctype ) {
+	return handler(uri,data,size,ctype);
+}
 
 }}
 

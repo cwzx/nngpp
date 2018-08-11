@@ -29,6 +29,10 @@ public:
 		return c;
 	}
 
+	nng_tls_config* operator->() const noexcept {
+		return c;
+	}
+
 	explicit operator bool() const noexcept {
 		return c != nullptr;
 	}

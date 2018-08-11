@@ -26,7 +26,7 @@ void server_cb(void* arg);
 struct work {
 	enum { INIT, RECV, WAIT, SEND } state = INIT;
 	nng::aio aio{ server_cb, this };
-	nng::msg msg{ nullptr };
+	nng::msg msg;
 	nng::ctx ctx;
 
 	explicit work( nng::socket_view sock ) : ctx(sock) {}
@@ -86,7 +86,7 @@ void server_cb(void* arg) {
 }
 
 // The server runs forever.
-int server(const char* url) {
+void server(const char* url) {
 	//  Create the socket.
 	auto sock = nng::rep::open();
 
@@ -104,7 +104,6 @@ int server(const char* url) {
 	while(true) {
 		nng::msleep(3600000); // neither pause() nor sleep() portable
 	}
-	return 0;
 }
 
 int main(int argc, char** argv) try {
@@ -112,8 +111,7 @@ int main(int argc, char** argv) try {
 		fprintf(stderr, "Usage: %s <url>\n", argv[0]);
 		return 1;
 	}
-	int rc = server(argv[1]);
-	return rc == 0 ? 0 : 1;
+	server(argv[1]);
 }
 catch( const nng::exception& e ) {
 	fprintf(stderr, "%s: %s\n", e.who(), e.what());

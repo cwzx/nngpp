@@ -53,7 +53,7 @@ static void open_clients(nng::socket* clients, int num) {
 static void transact(nng::socket* clients, int num) {
 	for(int i=0;i<num;++i) {
 		CAPTURE(i);
-		clients[i].send( nng::msg((size_t)0) );
+		clients[i].send( nng::make_msg(0) );
 		clients[i].recv_msg();
 	}
 }

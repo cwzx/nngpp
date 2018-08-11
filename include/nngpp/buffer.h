@@ -6,6 +6,8 @@ namespace nng {
 
 struct buffer : view {
 
+	buffer() = default;
+
 	template<typename T>
 	explicit buffer( T* d, size_t s ) noexcept : view((pointer)d,s) {}
 
@@ -64,6 +66,10 @@ struct buffer : view {
 	}
 
 };
+
+inline buffer make_buffer( size_t sz ) {
+	return buffer(sz);
+}
 
 }
 

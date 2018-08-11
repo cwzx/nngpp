@@ -8,7 +8,7 @@ namespace nng { namespace http {
 
 struct server_view {
 protected:
-	nng_http_server* s;
+	nng_http_server* s = nullptr;
 	
 public:
 	server_view() = default;

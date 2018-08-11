@@ -6,15 +6,10 @@
 namespace nng {
 
 struct mtx : mtx_view {
+
+	mtx() = default;
 	
 	explicit mtx( nng_mtx* m ) noexcept : mtx_view(m) {}
-	
-	mtx() {
-		int r = nng_mtx_alloc( &m );
-		if( r != 0 ) {
-			throw exception(r,"nng_mtx_alloc");
-		}
-	}
 	
 	mtx( const mtx& rhs ) = delete;
 	
@@ -44,6 +39,15 @@ struct mtx : mtx_view {
 	}
 
 };
+
+inline mtx make_mtx() {
+	nng_mtx* m;
+	int r = nng_mtx_alloc( &m );
+	if( r != 0 ) {
+		throw exception(r,"nng_mtx_alloc");
+	}
+	return mtx(m);
+}
 
 }
 

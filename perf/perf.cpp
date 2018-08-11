@@ -27,7 +27,6 @@
 
 static void die(const char* fmt, ...) {
 	va_list ap;
-
 	va_start(ap, fmt);
 	vfprintf(stderr, fmt, ap);
 	va_end(ap);
@@ -118,10 +117,10 @@ void throughput_client(const char* addr, size_t msgsize, int count) {
 	nng::set_opt_send_buffer( s, 128 );
 	nng::set_opt_recv_timeout( s, 5000 );
 	s.dial(addr);
-	s.send( nng::msg((size_t)0) );
+	s.send( nng::make_msg(0) );
 
 	for(int i = 0; i < count; ++i) {
-		s.send( nng::msg(msgsize) );
+		s.send( nng::make_msg(msgsize) );
 	}
 	// Attempt to get the completion indication from the other side.
 	s.recv_msg();

@@ -41,11 +41,11 @@ static void rest_job_cb(void* arg);
 
 struct rest_job {
 	nng::aio_view             http_aio;                 // aio from HTTP we must reply to
-	nng::http::res            http_res{ nullptr };      // HTTP response object
+	nng::http::res            http_res;                 // HTTP response object
 	job_state                 state = READ_DATA;        // 0 = sending, 1 = receiving
-	nng::msg                  msg{ nullptr };           // request message
+	nng::msg                  msg;                      // request message
 	nng::aio                  aio{ rest_job_cb, this }; // request flow
-	nng::ctx                  ctx{ nng_ctx{0} };        // context on the request socket
+	nng::ctx                  ctx;                      // context on the request socket
 	std::unique_ptr<rest_job> next;                     // next on the freelist
 };
 
@@ -53,13 +53,13 @@ nng::socket req_sock;
 
 // We maintain a queue of free jobs.  This way we don't have to
 // deallocate them from the callback; we just reuse them.
-nng::mtx job_lock;
+auto job_lock = nng::make_mtx();
 std::unique_ptr<rest_job> job_freelist;
 
 static void rest_recycle_job(std::unique_ptr<rest_job>&& job) {
-	job->http_res = nng::http::res(nullptr);
-	job->msg = nng::msg(nullptr);
-	job->ctx = nng::ctx(nng_ctx{0});
+	job->http_res = nng::http::res();
+	job->msg = nng::msg();
+	job->ctx = nng::ctx();
 
 	std::lock_guard<nng::mtx> lock( job_lock );
 	job->next    = std::move(job_freelist);
@@ -103,7 +103,7 @@ static void rest_http_fatal(std::unique_ptr<rest_job>&& job, const char* who, nn
 }
 
 static void rest_job_cb(void* arg) {
-	auto job = std::unique_ptr<rest_job>((rest_job*)arg);
+	std::unique_ptr<rest_job> job( (rest_job*)arg );
 	nng::aio_view aio = job->aio;
 
 	switch(job->state) {
@@ -181,7 +181,7 @@ void rest_handle(nng_aio* a) {
 		return;
 	}
 	try {
-		job->http_res = nng::http::res();
+		job->http_res = nng::http::make_res();
 		job->ctx = nng::ctx(req_sock);
 	}
 	catch( const nng::exception& e ) {
@@ -224,9 +224,8 @@ void rest_handle(nng_aio* a) {
 		return;
 	}
 	
-	nng_iov iov = job->msg.body().get();
 	try {
-		job->aio.set_iov(iov);
+		job->aio.set_iov( job->msg.body().get() );
 	}
 	catch( const nng::exception& e ) {
 		rest_http_fatal(std::move(job), e.who(), e.get_error());
@@ -308,7 +307,7 @@ catch( const nng::exception& e ) {
 }
 
 int main(int argc, char** argv) try {
-	nng::http::server server(nullptr);
+	nng::http::server server;
 	nng::thread inproc_thr( inproc_server, nullptr );
 
 	uint16_t port = 0;

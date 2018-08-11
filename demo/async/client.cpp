@@ -8,21 +8,20 @@
 #include <nngpp/platform/platform.h>
 
 //  The client runs just once, and then returns.
-int client(const char* url, const char* msecstr) {
+void client(const char* url, const char* msecstr) {
 	auto msec = atoi(msecstr);
 
 	auto sock = nng::req::open();
 	sock.dial(url);
 
 	auto start = nng::clock();
-	auto msg = nng::msg((size_t)0);
+	auto msg = nng::make_msg(0);
 	msg.body().append_u32(msec);
 	sock.send(std::move(msg));
 	msg = sock.recv_msg();
 	auto end = nng::clock();
 
 	printf("Request took %u milliseconds.\n", (uint32_t)(end - start));
-	return 0;
 }
 
 int main(int argc, char** argv) try {
@@ -30,8 +29,7 @@ int main(int argc, char** argv) try {
 		fprintf(stderr, "Usage: %s <url> <secs>\n", argv[0]);
 		return 1;
 	}
-	int rc = client(argv[1], argv[2]);
-	return rc == 0 ? 0 : 1;
+	client(argv[1], argv[2]);
 }
 catch( const nng::exception& e ) {
 	fprintf(stderr, "%s: %s\n", e.who(), e.what());

@@ -42,7 +42,7 @@ TEST_CASE("Respondent pollable") {
 				nng::msleep(100);
 
 				SECTION("Becomes writable after recv") {
-					surv.send( nng::msg((size_t)0) );
+					surv.send( nng::make_msg(0) );
 					resp.recv_msg();
 				}
 			}
@@ -60,7 +60,7 @@ TEST_CASE("Respondent pollable") {
 				REQUIRE_NOTHROW( surv.dial(addr) );
 				nng::msleep(200);
 
-				nng::msg msg((size_t)0);
+				auto msg = nng::make_msg(0);
 				msg.body().append( {"xyz",3} );
 				surv.send( std::move(msg) );
 

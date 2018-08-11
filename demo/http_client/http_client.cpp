@@ -7,14 +7,13 @@
 #include <nngpp/http/http.h>
 
 int main( int argc, char** argv ) try {
-
 	if(argc < 2) {
 		fprintf(stderr, "No URL supplied!\n");
 		return 1;
 	}
 
-	auto url = nng::url(argv[1]);
-	auto client = nng::http::client(url);
+	nng::url url( argv[1] );
+	nng::http::client client( url );
 
 	nng::aio aio(nullptr,nullptr);
 	client.connect( aio );
@@ -45,7 +44,7 @@ int main( int argc, char** argv ) try {
 	}
 	
 	// Read a response.
-	nng::http::res res;
+	auto res = nng::http::make_res();
 	conn.read(res,aio);
 	aio.wait();
 	{
