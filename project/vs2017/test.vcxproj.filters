@@ -146,9 +146,6 @@
     <ClInclude Include="..\..\include\nngpp\protocol\pair1.h">
       <Filter>Header Files\protocol</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\all.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\nngpp\protocol\rep0.h">
       <Filter>Header Files\protocol</Filter>
     </ClInclude>

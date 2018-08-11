@@ -167,7 +167,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\include\nngpp\aio.h" />
     <ClInclude Include="..\..\include\nngpp\aio_view.h" />
-    <ClInclude Include="..\..\include\nngpp\all.h" />
     <ClInclude Include="..\..\include\nngpp\buffer.h" />
     <ClInclude Include="..\..\include\nngpp\core.h" />
     <ClInclude Include="..\..\include\nngpp\ctx.h" />
