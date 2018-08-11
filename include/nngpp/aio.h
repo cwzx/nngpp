@@ -50,6 +50,10 @@ inline aio make_aio( void (*cb)(void*), void* arg ) {
 	return aio(cb,arg);
 }
 
+inline aio make_aio() {
+	return aio(nullptr,nullptr);
+}
+
 }
 
 #endif

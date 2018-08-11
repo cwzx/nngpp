@@ -7,7 +7,7 @@ TEST_CASE("HTTP Client","[httpclient]") {
 
 	SECTION("Given a TCP connection to httpbin.org") {
 
-		nng::aio aio(nullptr,nullptr);
+		auto aio = nng::make_aio();
 		REQUIRE(aio);
 
 		nng::url url("http://example.org/");

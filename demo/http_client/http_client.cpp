@@ -15,7 +15,7 @@ int main( int argc, char** argv ) try {
 	nng::url url( argv[1] );
 	nng::http::client client( url );
 
-	nng::aio aio(nullptr,nullptr);
+	auto aio = nng::make_aio();
 	client.connect( aio );
 
 	aio.wait();
