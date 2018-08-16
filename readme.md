@@ -1,6 +1,8 @@
 # nngpp
 
-C++ wrapper around the [NNG](https://github.com/nanomsg/nng) API
+C++ wrapper around the [nanomsg NNG](https://github.com/nanomsg/nng) API
+
+What's nanomsg? In a nutshell it's a spiritual successor to ZeroMQ, and NNG is its latest incarnation.
 
 ## Features
 
