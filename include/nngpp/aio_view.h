@@ -108,8 +108,16 @@ public:
 		set_iov(1,&iov);
 	}
 	
+	bool begin() const noexcept {
+		return nng_aio_begin(a);
+	}
+	
 	void finish( error e = error::success ) const noexcept {
 		nng_aio_finish(a,(int)e);
+	}
+	
+	void defer( nng_aio_cancelfn fn, void* arg ) const noexcept {
+		nng_aio_defer(a,fn,arg);
 	}
 	
 };
