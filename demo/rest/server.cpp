@@ -79,7 +79,7 @@ static std::unique_ptr<rest_job> rest_get_job(void) {
 		job_lock.unlock();
 	}
 
-	job = std::make_unique<rest_job>();
+	job = std::unique_ptr<rest_job>(new rest_job);
 	if( !job ) {
 		return {};
 	}

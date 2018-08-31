@@ -92,7 +92,7 @@ void server(const char* url) {
 
 	std::unique_ptr<work> works[PARALLEL];
 	for(int i=0;i<PARALLEL;++i) {
-		works[i] = std::make_unique<work>(sock);
+		works[i] = std::unique_ptr<work>(new work(sock));
 	}
 
 	sock.listen(url);

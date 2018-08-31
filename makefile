@@ -1,6 +1,6 @@
 
 # defaults
-CXX = g++
+CXX = clang++-4.0
 CATCH_INC =
 NNG_INC =
 NNG_LNK = -lnng -lmbedtls -lmbedx509 -lmbedcrypto
@@ -18,8 +18,8 @@ DEMO_DIR = $(BASE_DIR)/demo
 INC_FLG = -I$(INC_DIR) -I$(NNG_INC) -I$(CATCH_INC)
 LIB_FLG = $(NNG_LNK) -lpthread
 
-REL_FLG = -Wall -Wextra -std=c++17 -march=native -O3 -DNDEBUG -Wno-unused-parameter
-DBG_FLG = -Wall -Wextra -std=c++17 -march=native -g -Wno-unused-parameter
+REL_FLG = -Wall -Wextra -std=c++11 -march=native -O3 -DNDEBUG -Wno-unused-parameter
+DBG_FLG = -Wall -Wextra -std=c++11 -march=native -g -Wno-unused-parameter
 
 TEST_FILES = $(shell echo $(TEST_DIR)/*.cpp)
 TEST_BIN = $(BIN_DIR)/test

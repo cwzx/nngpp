@@ -94,7 +94,7 @@ void server(const char* url) {
 
 	std::unique_ptr<work> works[PARALLEL];
 	for (int i=0;i<PARALLEL;++i) {
-		works[i] = std::make_unique<work>(sock);
+		works[i] = std::unique_ptr<work>(new work(sock));
 	}
 
 	sock.listen(url);
@@ -104,7 +104,7 @@ void server(const char* url) {
 	}
 
 	while(true) {
-		nng::msleep(3'600'000); // neither pause() nor sleep() portable
+		nng::msleep(3600000); // neither pause() nor sleep() portable
 	}
 }
 
