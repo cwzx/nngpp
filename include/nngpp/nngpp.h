@@ -7,5 +7,5 @@
 #include "pipe.h"
 #include "aio.h"
 #include "url.h"
-//#include "snapshot.h"
+#include "stat.h"
 #endif

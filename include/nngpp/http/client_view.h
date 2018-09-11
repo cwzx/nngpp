@@ -2,7 +2,8 @@
 #define NNGPP_HTTP_CLIENT_VIEW_H
 #include <nngpp/aio_view.h>
 #include <nngpp/transport/tls/config_view.h>
-#include "misc.h"
+#include "req_view.h"
+#include "res_view.h"
 
 namespace nng { namespace http {
 
@@ -46,7 +47,10 @@ public:
 	void connect( aio_view a ) const noexcept {
 		nng_http_client_connect(c,a.get());
 	}
-
+	
+	void transact( req_view q, res_view s, aio_view a ) const noexcept {
+		nng_http_client_transact(c,q.get(),s.get(),a.get());
+	}
 };
 
 }}

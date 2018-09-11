@@ -120,7 +120,7 @@ nng::mtx mtx2;                // default constructor gives null mutex
 | async i/o          | `nng_aio*`          | `nng::aio_view`           | `nng::aio`           |
 | url                | `nng_url*`          | `nng::url_view`           | `nng::url`           |
 | buffer             | `void*, size_t`     | `nng::view`               | `nng::buffer`        |
-| snapshot           | `nng_snapshot*`     | `nng::snapshot_view`      | `nng::snapshot`      |
+| stat               | `nng_stat*`         | `nng::stat_view`          | `nng::stat`          |
 | thread             | `nng_thread*`       | `nng::thread_view`        | `nng::thread`        |
 | mutex              | `nng_mtx*`          | `nng::mtx_view`           | `nng::mtx`           |
 | condition variable | `nng_cv*`           | `nng::cv_view`            | `nng::cv`            |

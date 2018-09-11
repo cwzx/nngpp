@@ -63,10 +63,31 @@ public:
 		}
 	}
 	
+	void append_u16( uint16_t val ) const {
+		int r = nng_msg_append_u16(m,val);
+		if( r != 0 ) {
+			throw exception(r,"nng_msg_append_u16");
+		}
+	}
+	
 	void append_u32( uint32_t val ) const {
 		int r = nng_msg_append_u32(m,val);
 		if( r != 0 ) {
 			throw exception(r,"nng_msg_append_u32");
+		}
+	}
+	
+	void append_u64( uint64_t val ) const {
+		int r = nng_msg_append_u64(m,val);
+		if( r != 0 ) {
+			throw exception(r,"nng_msg_append_u64");
+		}
+	}
+	
+	void insert_u16( uint16_t val ) const {
+		int r = nng_msg_insert_u16(m,val);
+		if( r != 0 ) {
+			throw exception(r,"nng_msg_insert_u16");
 		}
 	}
 	
@@ -75,6 +96,22 @@ public:
 		if( r != 0 ) {
 			throw exception(r,"nng_msg_insert_u32");
 		}
+	}
+	
+	void insert_u64( uint64_t val ) const {
+		int r = nng_msg_insert_u64(m,val);
+		if( r != 0 ) {
+			throw exception(r,"nng_msg_insert_u64");
+		}
+	}
+	
+	uint16_t trim_u16() const {
+		uint16_t val;
+		int r = nng_msg_trim_u16(m,&val);
+		if( r != 0 ) {
+			throw exception(r,"nng_msg_trim_u16");
+		}
+		return val;
 	}
 	
 	uint32_t trim_u32() const {
@@ -86,11 +123,38 @@ public:
 		return val;
 	}
 	
+	uint64_t trim_u64() const {
+		uint64_t val;
+		int r = nng_msg_trim_u64(m,&val);
+		if( r != 0 ) {
+			throw exception(r,"nng_msg_trim_u64");
+		}
+		return val;
+	}
+	
+	uint16_t chop_u16() const {
+		uint16_t val;
+		int r = nng_msg_chop_u16(m,&val);
+		if( r != 0 ) {
+			throw exception(r,"nng_msg_chop_u16");
+		}
+		return val;
+	}
+	
 	uint32_t chop_u32() const {
 		uint32_t val;
 		int r = nng_msg_chop_u32(m,&val);
 		if( r != 0 ) {
 			throw exception(r,"nng_msg_chop_u32");
+		}
+		return val;
+	}
+	
+	uint64_t chop_u64() const {
+		uint64_t val;
+		int r = nng_msg_chop_u64(m,&val);
+		if( r != 0 ) {
+			throw exception(r,"nng_msg_chop_u64");
 		}
 		return val;
 	}

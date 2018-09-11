@@ -194,22 +194,6 @@ inline void set_opt_ping_tries( listener_view s, int v ) {
 	s.set_opt_int( to_name(option::ping_tries), v );
 }
 
-inline nng_duration get_opt_conn_time( listener_view s ) {
-	return s.get_opt_ms( to_name(option::conn_time) );
-}
-
-inline void set_opt_conn_time( listener_view s, nng_duration v ) {
-	s.set_opt_ms( to_name(option::conn_time), v );
-}
-
-inline int get_opt_conn_tries( listener_view s ) {
-	return s.get_opt_int( to_name(option::conn_tries) );
-}
-
-inline void set_opt_conn_tries( listener_view s, int v ) {
-	s.set_opt_int( to_name(option::conn_tries), v );
-}
-
 inline uint64_t get_opt_orbit( listener_view s ) {
 	return s.get_opt_uint64( to_name(option::orbit) );
 }

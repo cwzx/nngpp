@@ -170,9 +170,6 @@
     <ClInclude Include="..\..\include\nngpp\protocol\pull0.h">
       <Filter>Header Files\protocol</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\snapshot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\nngpp\transport\tls.h">
       <Filter>Header Files\transport</Filter>
     </ClInclude>
@@ -198,9 +195,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\nngpp\listener_view.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\snapshot_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\nngpp\url_view.h">
@@ -271,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\nngpp\platform\cv_view.h">
       <Filter>Header Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\stat.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

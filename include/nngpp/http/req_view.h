@@ -1,6 +1,6 @@
 #ifndef NNGPP_HTTP_REQ_VIEW_H
 #define NNGPP_HTTP_REQ_VIEW_H
-#include <nngpp/error.h>
+#include <nngpp/view.h>
 #include "misc.h"
 
 namespace nng { namespace http {
@@ -83,6 +83,13 @@ public:
 			throw exception(r,"nng_http_req_del_header");
 		}
 	}
+
+	view get_data() const noexcept {
+		void* data;
+		size_t size;
+		nng_http_req_get_data(q,&data,&size);
+		return view(data,size);
+	}
 	
 	void set_data( view v ) const {
 		int r = nng_http_req_set_data(q,v.data(),v.size());
@@ -97,6 +104,7 @@ public:
 			throw exception(r,"nng_http_req_copy_data");
 		}
 	}
+
 };
 
 }}

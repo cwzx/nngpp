@@ -83,7 +83,14 @@ public:
 			throw exception(r,"nng_http_res_set_version");
 		}
 	}
-	
+
+	view get_data() const noexcept {
+		void* data;
+		size_t size;
+		nng_http_res_get_data(s,&data,&size);
+		return view(data,size);
+	}
+
 	void set_data( view v ) const {
 		int r = nng_http_res_set_data(s,v.data(),v.size());
 		if( r != 0 ) {

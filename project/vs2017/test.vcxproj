@@ -215,11 +215,10 @@
     <ClInclude Include="..\..\include\nngpp\protocol\respond0.h" />
     <ClInclude Include="..\..\include\nngpp\protocol\sub0.h" />
     <ClInclude Include="..\..\include\nngpp\protocol\survey0.h" />
-    <ClInclude Include="..\..\include\nngpp\snapshot.h" />
-    <ClInclude Include="..\..\include\nngpp\snapshot_view.h" />
     <ClInclude Include="..\..\include\nngpp\socket.h" />
     <ClInclude Include="..\..\include\nngpp\option.h" />
     <ClInclude Include="..\..\include\nngpp\socket_view.h" />
+    <ClInclude Include="..\..\include\nngpp\stat.h" />
     <ClInclude Include="..\..\include\nngpp\stat_view.h" />
     <ClInclude Include="..\..\include\nngpp\transport\inproc.h" />
     <ClInclude Include="..\..\include\nngpp\transport\ipc.h" />

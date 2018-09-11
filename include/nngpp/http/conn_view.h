@@ -65,6 +65,10 @@ public:
 			throw exception(r,"nng_http_hijack");
 		}
 	}
+
+	void transact( req_view q, res_view s, aio_view a ) const noexcept {
+		nng_http_conn_transact(n,q.get(),s.get(),a.get());
+	}
 };
 
 }}

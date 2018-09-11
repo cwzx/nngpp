@@ -5,15 +5,18 @@
 namespace nng {
 
 enum class stat_type {
+	scope   = NNG_STAT_SCOPE,
 	level   = NNG_STAT_LEVEL,
-	counter = NNG_STAT_COUNTER
+	counter = NNG_STAT_COUNTER,
+	string  = NNG_STAT_STRING,
+	boolean = NNG_STAT_BOOLEAN,
+	id      = NNG_STAT_ID
 };
 
 enum class stat_unit {
 	none     = NNG_UNIT_NONE,
 	bytes    = NNG_UNIT_BYTES,
 	messages = NNG_UNIT_MESSAGES,
-	boolean  = NNG_UNIT_BOOLEAN,
 	millis   = NNG_UNIT_MILLIS,
 	events   = NNG_UNIT_EVENTS
 };
@@ -38,6 +41,18 @@ public:
 	explicit operator bool() const noexcept {
 		return s != nullptr;
 	}
+	
+	void dump() const noexcept {
+		nng_stats_dump(s);
+	}
+	
+	stat_view next() const noexcept {
+		return nng_stat_next(s);
+	}
+	
+	stat_view child() const noexcept {
+		return nng_stat_child(s);
+	}
 
 	const char* name() const noexcept {
 		return nng_stat_name(s);
@@ -51,10 +66,21 @@ public:
 		return (stat_unit)nng_stat_unit(s);
 	}
 
-	int64_t value() const noexcept {
+	uint64_t value() const noexcept {
 		return nng_stat_value(s);
 	}
 
+	const char* string() const noexcept {
+		return nng_stat_string(s);
+	}
+	
+	const char* desc() const noexcept {
+		return nng_stat_desc(s);
+	}
+	
+	uint64_t timestamp() const noexcept {
+		return nng_stat_timestamp(s);
+	}
 };
 
 }
