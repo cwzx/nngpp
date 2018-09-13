@@ -26,6 +26,10 @@ public:
 		return q != nullptr;
 	}
 	
+	void reset() const noexcept {
+		nng_http_req_reset(q);
+	}
+
 	const char* get_method() const noexcept {
 		return nng_http_req_get_method(q);
 	}

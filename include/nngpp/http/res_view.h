@@ -25,6 +25,10 @@ public:
 	explicit operator bool() const noexcept {
 		return s != nullptr;
 	}
+	
+	void reset() const noexcept {
+		nng_http_res_reset(s);
+	}
 
 	status get_status() const noexcept {
 		return (status)nng_http_res_get_status(s);
