@@ -20,6 +20,7 @@ What's nanomsg? In a nutshell it's a spiritual successor to ZeroMQ, and NNG is i
 #include <nngpp/nngpp.h>
 #include <nngpp/protocol/req0.h>
 #include <nngpp/protocol/rep0.h>
+#include <cstdio>
 
 int main() try {
 	// create a socket for the rep protocol
@@ -67,6 +68,17 @@ All 5 [nng demos](https://github.com/nanomsg/nng/tree/master/demo) have been por
 I have kept the original structure of the demos intact, just replacing the nng API with nngpp.
 This allows for easy comparison with the nng demos, but may mean they are non-idiomatic in places.
 See the [`demo`](demo) directory.
+
+
+## Dependencies
+
+Since nngpp is a wrapper around nng, you will need to link with libnng.
+
+* If you built nng without tls support:
+`-lnng -lpthread`
+* If you built nng with tls support:
+`-lnng -lmbedtls -lmbedx509 -lmbedcrypto -lpthread`
+
 
 ## Design
 
