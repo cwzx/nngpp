@@ -32,7 +32,7 @@ struct stat : stat_view {
 		if( s != nullptr ) nng_stats_free(s);
 	}
 
-	nng_stat* release() {
+	nng_stat* release() noexcept {
 		auto out = s;
 		s = nullptr;
 		return out;

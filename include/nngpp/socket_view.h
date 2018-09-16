@@ -50,25 +50,21 @@ public:
 	}
 
 	void send( buffer&& buf, int flags = 0 ) const {
-		auto size = buf.size();
-		int r = nng_send(s,buf.release(), size,flags | flag::alloc);
+		int r = nng_send(s,buf.data(),buf.size(),flags | flag::alloc);
 		if( r != 0 ) {
 			throw exception(r,"nng_send");
 		}
+		// if successful, the buffer has been freed
+		buf.release();
 	}
 
-	void send( msg_view m, int flags = 0 ) const {
+	void send( msg&& m, int flags = 0 ) const {
 		int r = nng_sendmsg(s,m.get(),flags);
 		if( r != 0 ) {
 			throw exception(r,"nng_sendmsg");
 		}
-	}
-
-	void send( msg&& m, int flags = 0 ) const {
-		int r = nng_sendmsg(s,m.release(),flags);
-		if( r != 0 ) {
-			throw exception(r,"nng_sendmsg");
-		}
+		// if successful, the msg is owned by the socket
+		m.release();
 	}
 
 	/**

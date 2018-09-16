@@ -58,7 +58,7 @@ struct buffer : view {
 		if( d != nullptr ) nng_free(d,s);
 	}
 
-	pointer release() {
+	pointer release() noexcept {
 		auto out = d;
 		d = nullptr;
 		s = 0;

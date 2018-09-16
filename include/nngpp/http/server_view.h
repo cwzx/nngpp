@@ -39,10 +39,12 @@ public:
 	}
 	
 	void add_handler( handler&& h ) const {
-		int r = nng_http_server_add_handler(s,h.release());
+		int r = nng_http_server_add_handler(s,h.get());
 		if( r != 0 ) {
 			throw exception(r,"nng_http_server_add_handler");
 		}
+		// if successful, the handler is owned by the server
+		h.release();
 	}
 	
 	handler remove_handler( handler_view h ) const {
