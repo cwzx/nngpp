@@ -61,6 +61,13 @@ public:
 			throw exception(r,"nng_http_handler_set_data");
 		}
 	}
+
+	void collect_body( bool want, size_t maxsz ) const {
+		int r = nng_http_handler_collect_body(h,want,maxsz);
+		if( r != 0 ) {
+			throw exception(r,"nng_http_handler_collect_body");
+		}
+	}
 };
 
 }}

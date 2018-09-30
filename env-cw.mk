@@ -6,7 +6,7 @@ LINUX_LIBS = /home/chris/lib
 
 CATCH_INC = $(LIBRARIES)/Catch2/single_include
 
-MBEDTLS_DIR = $(LINUX_LIBS)/mbedtls-2.12.0
+MBEDTLS_DIR = $(LINUX_LIBS)/mbedtls-2.13.0
 MBEDTLS_LIB = $(MBEDTLS_DIR)/lib
 MBEDTLS_LNK = $(MBEDTLS_LIB)/libmbedtls.a $(MBEDTLS_LIB)/libmbedx509.a $(MBEDTLS_LIB)/libmbedcrypto.a
 
