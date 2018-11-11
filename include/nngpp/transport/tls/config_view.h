@@ -16,6 +16,8 @@ enum class auth_mode {
 	required = NNG_TLS_AUTH_MODE_REQUIRED
 };
 
+struct config;
+
 struct config_view {
 protected:
 	nng_tls_config* c = nullptr;
@@ -36,6 +38,8 @@ public:
 	explicit operator bool() const noexcept {
 		return c != nullptr;
 	}
+
+	config hold() const noexcept;
 	
 	const config_view& config_server_name( const char* name ) const {
 		int r = nng_tls_config_server_name(c,name);

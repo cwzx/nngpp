@@ -46,6 +46,11 @@ struct config : config_view {
 
 };
 
+inline config config_view::hold() const noexcept {
+	nng_tls_config_hold(c);
+	return config(c);
+}
+
 inline config make_config( mode mode ) {
 	return config(mode);
 }
