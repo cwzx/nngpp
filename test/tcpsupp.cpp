@@ -42,8 +42,8 @@ TEST_CASE("Supplemental TCP", "[tcp]") {
 	REQUIRE(daio.result() == nng::error::success);
 	REQUIRE(laio.result() == nng::error::success);
 
-	nng::tcp::tcp_view c1 = daio.get_output<nng_tcp>(0);
-	nng::tcp::tcp_view c2 = laio.get_output<nng_tcp>(0);
+	nng::tcp::tcp c1( daio.get_output<nng_tcp>(0) );
+	nng::tcp::tcp c2( laio.get_output<nng_tcp>(0) );
 	REQUIRE(c1);
 	REQUIRE(c2);
 	
