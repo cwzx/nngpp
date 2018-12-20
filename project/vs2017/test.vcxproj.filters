@@ -28,6 +28,9 @@
     <Filter Include="Header Files\platform">
       <UniqueIdentifier>{2f9e07c6-2780-4829-97cf-305e55cf006d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\tcp">
+      <UniqueIdentifier>{88a9c3e3-7e0a-4343-a4eb-5c5f8738dbcf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\test\main.cpp">
@@ -64,6 +67,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\test\message.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\tcpsupp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -268,6 +274,24 @@
     </ClInclude>
     <ClInclude Include="..\..\include\nngpp\stat.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\tcp\tcp.h">
+      <Filter>Header Files\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\tcp\tcp_view.h">
+      <Filter>Header Files\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\tcp\dialer.h">
+      <Filter>Header Files\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\tcp\dialer_view.h">
+      <Filter>Header Files\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\tcp\listener.h">
+      <Filter>Header Files\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\tcp\listener_view.h">
+      <Filter>Header Files\tcp</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

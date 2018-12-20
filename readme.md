@@ -143,6 +143,9 @@ nng::mtx mtx2;                // default constructor gives null mutex
 | http request       | `nng_http_req*`     | `nng::http::req_view`     | `nng::http::req`     |
 | http response      | `nng_http_res*`     | `nng::http::res_view`     | `nng::http::res`     |
 | http server        | `nng_http_server*`  | `nng::http::server_view`  | `nng::http::server`  |
+| tcp connection     | `nng_tcp`           | `nng::tcp::tcp_view`      | `nng::tcp::tcp`      |
+| tcp dialer         | `nng_tcp_dialer`    | `nng::tcp::dialer_view`   | `nng::tcp::dialer`   |
+| tcp listener       | `nng_tcp_listener`  | `nng::tcp::listener_view` | `nng::tcp::listener` |
 
 ### Error handling
 
