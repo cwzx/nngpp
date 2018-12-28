@@ -31,6 +31,9 @@
     <Filter Include="Header Files\tcp">
       <UniqueIdentifier>{88a9c3e3-7e0a-4343-a4eb-5c5f8738dbcf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ipc">
+      <UniqueIdentifier>{d7fe4db5-1b34-49f1-9aaf-ee997cf015c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\test\main.cpp">
@@ -70,6 +73,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\test\tcpsupp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\ipcsupp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -292,6 +298,24 @@
     </ClInclude>
     <ClInclude Include="..\..\include\nngpp\tcp\listener_view.h">
       <Filter>Header Files\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\ipc\ipc.h">
+      <Filter>Header Files\ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\ipc\ipc_view.h">
+      <Filter>Header Files\ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\ipc\listener.h">
+      <Filter>Header Files\ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\ipc\listener_view.h">
+      <Filter>Header Files\ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\ipc\dialer.h">
+      <Filter>Header Files\ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\ipc\dialer_view.h">
+      <Filter>Header Files\ipc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

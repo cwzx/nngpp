@@ -1,17 +1,17 @@
 #include <catch2/catch.hpp>
 #include <cstring>
 #include <nngpp/nngpp.h>
-#include <nngpp/tcp/tcp.h>
+#include <nngpp/ipc/ipc.h>
 
 namespace {
 static uint8_t loopback[4] = { 127, 0, 0, 1 };
 }
 
-TEST_CASE("Supplemental TCP", "[tcp]") {
+TEST_CASE("Supplemental IPC", "[ipc]") {
 	
 	INFO("We can create a dialer and listener");
-	auto d = nng::tcp::make_dialer();
-	auto l = nng::tcp::make_listener();
+	auto d = nng::ipc::make_dialer();
+	auto l = nng::ipc::make_listener();
 	REQUIRE(d);
 	REQUIRE(l);
 	
@@ -20,13 +20,10 @@ TEST_CASE("Supplemental TCP", "[tcp]") {
 	memcpy(&ip, loopback, 4);
 
 	nng_sockaddr sa;
-	sa.s_in.sa_family = NNG_AF_INET;
-	sa.s_in.sa_addr = ip;
-	sa.s_in.sa_port = 0;
+	sa.s_ipc.sa_family = NNG_AF_IPC;
+	snprintf(sa.s_ipc.sa_path, sizeof(sa.s_ipc.sa_path), "%s", "/tmp/ipc_supp_test");
 
 	REQUIRE_NOTHROW(l.listen(sa));
-	REQUIRE(sa.s_in.sa_port != 0);
-	REQUIRE(sa.s_in.sa_addr == ip);
 
 	INFO("We can dial it");
 	nng::aio daio(nullptr,nullptr);
@@ -42,18 +39,14 @@ TEST_CASE("Supplemental TCP", "[tcp]") {
 	REQUIRE(daio.result() == nng::error::success);
 	REQUIRE(laio.result() == nng::error::success);
 
-	nng::tcp::tcp c1( daio.get_output<nng_tcp>(0) );
-	nng::tcp::tcp c2( laio.get_output<nng_tcp>(0) );
+	nng::ipc::ipc c1( daio.get_output<nng_ipc>(0) );
+	nng::ipc::ipc c2( laio.get_output<nng_ipc>(0) );
 	REQUIRE(c1);
 	REQUIRE(c2);
 	
 	INFO("They exchange messages");
 	nng::aio aio1(nullptr,nullptr);
 	nng::aio aio2(nullptr,nullptr);
-
-	REQUIRE_NOTHROW(c1.set_nodelay(true));
-	REQUIRE_NOTHROW(c2.set_nodelay(true));
-	REQUIRE_NOTHROW(c1.set_keepalive(true));
 	
 	char buf1[5];
 	memcpy(buf1, "TEST", 5);
@@ -79,19 +72,9 @@ TEST_CASE("Supplemental TCP", "[tcp]") {
 	INFO("Socket name matches");
 	{
 		nng_sockaddr sa2;
-		REQUIRE_NOTHROW(sa2 = c2.sockname());
-		REQUIRE(sa2.s_in.sa_family == NNG_AF_INET);
-		REQUIRE(sa2.s_in.sa_addr == ip);
-		REQUIRE(sa2.s_in.sa_port == sa.s_in.sa_port);
-	}
-	
-	INFO("Peer name matches")
-	{
-		nng_sockaddr sa2;
-		REQUIRE_NOTHROW(sa2 = c1.peername());
-		REQUIRE(sa2.s_in.sa_family == NNG_AF_INET);
-		REQUIRE(sa2.s_in.sa_addr == ip);
-		REQUIRE(sa2.s_in.sa_port == sa.s_in.sa_port);
+		REQUIRE_NOTHROW(sa2 = nng::ipc::get_opt_local_address(c2));
+		REQUIRE(sa2.s_ipc.sa_family == NNG_AF_IPC);
+		REQUIRE(strcmp(sa2.s_ipc.sa_path,sa.s_ipc.sa_path) == 0);
 	}
 
 }

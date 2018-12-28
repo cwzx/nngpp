@@ -72,6 +72,22 @@ public:
 	
 };
 
+inline nng_sockaddr get_opt_socket_name( tcp_view c ) {
+	return c.sockname();
+}
+
+inline nng_sockaddr get_opt_peer_name( tcp_view c ) {
+	return c.peername();
+}
+
+inline void set_opt_no_delay( tcp_view s, bool v ) {
+	s.set_nodelay(v);
+}
+
+inline void set_opt_keep_alive( tcp_view s, bool v ) {
+	s.set_keepalive(v);
+}
+
 }}
 
 #endif

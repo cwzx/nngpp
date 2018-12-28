@@ -1,8 +1,8 @@
 #ifndef NNGPP_TRANSPORT_WS_H
 #define NNGPP_TRANSPORT_WS_H
-#include <nngpp/listener.h>
-#include <nngpp/dialer.h>
-#include <nngpp/pipe.h>
+#include <nngpp/listener_view.h>
+#include <nngpp/dialer_view.h>
+#include <nngpp/pipe_view.h>
 
 extern "C" {
 #include <nng/transport/ws/websocket.h>

@@ -154,6 +154,7 @@
     <ClCompile Include="..\..\test\bus.cpp" />
     <ClCompile Include="..\..\test\device.cpp" />
     <ClCompile Include="..\..\test\http_client.cpp" />
+    <ClCompile Include="..\..\test\ipcsupp.cpp" />
     <ClCompile Include="..\..\test\main.cpp" />
     <ClCompile Include="..\..\test\message.cpp" />
     <ClCompile Include="..\..\test\pipe.cpp" />
@@ -189,6 +190,12 @@
     <ClInclude Include="..\..\include\nngpp\http\res_view.h" />
     <ClInclude Include="..\..\include\nngpp\http\server.h" />
     <ClInclude Include="..\..\include\nngpp\http\server_view.h" />
+    <ClInclude Include="..\..\include\nngpp\ipc\dialer.h" />
+    <ClInclude Include="..\..\include\nngpp\ipc\dialer_view.h" />
+    <ClInclude Include="..\..\include\nngpp\ipc\ipc.h" />
+    <ClInclude Include="..\..\include\nngpp\ipc\ipc_view.h" />
+    <ClInclude Include="..\..\include\nngpp\ipc\listener.h" />
+    <ClInclude Include="..\..\include\nngpp\ipc\listener_view.h" />
     <ClInclude Include="..\..\include\nngpp\listener.h" />
     <ClInclude Include="..\..\include\nngpp\listener_view.h" />
     <ClInclude Include="..\..\include\nngpp\msg.h" />

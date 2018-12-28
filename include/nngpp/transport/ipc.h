@@ -1,7 +1,7 @@
 #ifndef NNGPP_TRANSPORT_IPC_H
 #define NNGPP_TRANSPORT_IPC_H
-#include <nngpp/listener.h>
-#include <nngpp/pipe.h>
+#include <nngpp/listener_view.h>
+#include <nngpp/pipe_view.h>
 
 extern "C" {
 #include <nng/transport/ipc/ipc.h>
@@ -47,28 +47,28 @@ inline const char* to_name( option o ) noexcept {
 	return detail::option_names[(int)o];
 }
 
-inline uint64_t get_opt_peer_uid( pipe_view s ) {
+inline uint64_t get_opt_peer_uid( nng::pipe_view s ) {
 	return s.get_opt_uint64( to_name(option::peer_uid) );
 }
 
-inline uint64_t get_opt_peer_gid( pipe_view s ) {
+inline uint64_t get_opt_peer_gid( nng::pipe_view s ) {
 	return s.get_opt_uint64( to_name(option::peer_gid) );
 }
 
-inline uint64_t get_opt_peer_pid( pipe_view s ) {
+inline uint64_t get_opt_peer_pid( nng::pipe_view s ) {
 	return s.get_opt_uint64( to_name(option::peer_pid) );
 }
 
-inline uint64_t get_opt_peer_zoneid( pipe_view s ) {
+inline uint64_t get_opt_peer_zoneid( nng::pipe_view s ) {
 	return s.get_opt_uint64( to_name(option::peer_zoneid) );
 }
 
-inline void set_opt_security_descriptor( listener_view s, void* v ) {
+inline void set_opt_security_descriptor( nng::listener_view s, void* v ) {
 	s.set_opt_ptr( to_name(option::security_descriptor), v );
 }
 
-inline void set_opt_security_descriptor( listener_view s, int v ) {
-	s.set_opt_int( to_name(option::security_descriptor), v );
+inline void set_opt_permissions( nng::listener_view s, int v ) {
+	s.set_opt_int( to_name(option::permissions), v );
 }
 
 }}
