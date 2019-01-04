@@ -79,7 +79,7 @@ public:
 	 * Synchronous
 	 * Returns the number of bytes written
 	 */
-	size_t recv( buffer& out, int flags = 0 ) const {
+	size_t recv( view out, int flags = 0 ) const {
 		size_t sz = out.size();
 		int r = nng_recv(s,out.data(),&sz,flags & ~flag::alloc);
 		if( r != 0 ) {
