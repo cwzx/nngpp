@@ -1,6 +1,7 @@
 #ifndef NNGPP_TCP_TCP_VIEW_H
 #define NNGPP_TCP_TCP_VIEW_H
 #include <nng/supplemental/tcp/tcp.h>
+#include <nngpp/transport/tcp.h>
 #include <nngpp/aio_view.h>
 
 namespace nng { namespace tcp {
@@ -37,55 +38,58 @@ public:
 	void recv( aio_view a ) const noexcept {
 		nng_tcp_recv(c,a.get());
 	}
-	
-	nng_sockaddr sockname() const {
-		nng_sockaddr out;
-		int r = nng_tcp_sockname(c,&out);
+
+	void get_opt( const char* name, void* val, size_t* szp ) const {
+		int r = nng_tcp_getopt(c,name,val,szp);
 		if( r != 0 ) {
-			throw exception(r,"nng_tcp_sockname");
+			throw exception(r,"nng_tcp_getopt");
 		}
+	}
+	
+	template<typename T>
+	T get_opt( const char* name ) const {
+		T out;
+		size_t size = sizeof(out);
+		get_opt(name,&out,&size);
 		return out;
 	}
 	
-	nng_sockaddr peername() const {
-		nng_sockaddr out;
-		int r = nng_tcp_peername(c,&out);
+	void set_opt( const char* name, const void* val, size_t sz ) const {
+		int r = nng_tcp_setopt(c,name,val,sz);
 		if( r != 0 ) {
-			throw exception(r,"nng_tcp_peername");
-		}
-		return out;
-	}
-	
-	void set_nodelay( bool val ) const {
-		int r = nng_tcp_set_nodelay(c,val);
-		if( r != 0 ) {
-			throw exception(r,"nng_tcp_set_nodelay");
+			throw exception(r,"nng_tcp_setopt");
 		}
 	}
 	
-	void set_keepalive( bool val ) const {
-		int r = nng_tcp_set_keepalive(c,val);
-		if( r != 0 ) {
-			throw exception(r,"nng_tcp_set_keepalive");
-		}
+	template<typename T>
+	void set_opt( const char* name, const T& v ) const {
+		set_opt(name,&v,sizeof(v));
 	}
-	
+
 };
 
-inline nng_sockaddr get_opt_socket_name( tcp_view c ) {
-	return c.sockname();
+inline nng_sockaddr get_opt_local_address( tcp_view c ) {
+	return c.get_opt<nng_sockaddr>( to_name(nng::option::local_address) );
 }
 
-inline nng_sockaddr get_opt_peer_name( tcp_view c ) {
-	return c.peername();
+inline nng_sockaddr get_opt_remote_address( tcp_view c ) {
+	return c.get_opt<nng_sockaddr>( to_name(nng::option::remote_address) );
 }
 
-inline void set_opt_no_delay( tcp_view s, bool v ) {
-	s.set_nodelay(v);
+inline bool get_opt_no_delay( tcp_view c ) {
+	return c.get_opt<bool>( to_name(option::no_delay) );
 }
 
-inline void set_opt_keep_alive( tcp_view s, bool v ) {
-	s.set_keepalive(v);
+inline bool get_opt_keep_alive( tcp_view c ) {
+	return c.get_opt<bool>( to_name(option::keep_alive) );
+}
+
+inline void set_opt_no_delay( tcp_view c, bool v ) {
+	c.set_opt( to_name(option::no_delay), v );
+}
+
+inline void set_opt_keep_alive( tcp_view c, bool v ) {
+	c.set_opt( to_name(option::keep_alive), v );
 }
 
 }}

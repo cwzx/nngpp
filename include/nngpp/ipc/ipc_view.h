@@ -45,16 +45,10 @@ public:
 			throw exception(r,"nng_ipc_getopt");
 		}
 	}
-	
-	uint64_t get_opt_uint64( const char* name ) const {
-		uint64_t out;
-		size_t size = sizeof(out);
-		get_opt(name,&out,&size);
-		return out;
-	}
-	
-	nng_sockaddr get_opt_sockaddr( const char* name ) const {
-		nng_sockaddr out;
+
+	template<typename T>
+	T get_opt( const char* name ) const {
+		T out;
 		size_t size = sizeof(out);
 		get_opt(name,&out,&size);
 		return out;
@@ -67,30 +61,35 @@ public:
 		}
 	}
 	
+	template<typename T>
+	void set_opt( const char* name, const T& v ) const {
+		set_opt(name,&v,sizeof(v));
+	}
+	
 };
 
 inline nng_sockaddr get_opt_local_address( ipc_view c ) {
-	return c.get_opt_sockaddr( to_name(nng::option::local_address) );
+	return c.get_opt<nng_sockaddr>( to_name(nng::option::local_address) );
 }
 
 inline nng_sockaddr get_opt_remote_address( ipc_view c ) {
-	return c.get_opt_sockaddr( to_name(nng::option::remote_address) );
+	return c.get_opt<nng_sockaddr>( to_name(nng::option::remote_address) );
 }
 
 inline uint64_t get_opt_peer_uid( ipc_view c ) {
-	return c.get_opt_uint64( to_name(option::peer_uid) );
+	return c.get_opt<uint64_t>( to_name(option::peer_uid) );
 }
 
 inline uint64_t get_opt_peer_gid( ipc_view c ) {
-	return c.get_opt_uint64( to_name(option::peer_gid) );
+	return c.get_opt<uint64_t>( to_name(option::peer_gid) );
 }
 
 inline uint64_t get_opt_peer_pid( ipc_view c ) {
-	return c.get_opt_uint64( to_name(option::peer_pid) );
+	return c.get_opt<uint64_t>( to_name(option::peer_pid) );
 }
 
 inline uint64_t get_opt_peer_zoneid( ipc_view c ) {
-	return c.get_opt_uint64( to_name(option::peer_zoneid) );
+	return c.get_opt<uint64_t>( to_name(option::peer_zoneid) );
 }
 
 }}

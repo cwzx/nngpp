@@ -32,7 +32,6 @@
 // obtain parallelism.
 
 enum job_state {
-	READ_DATA, // Reading HTTP post payload
 	SEND_REQ,  // Sending REQ request
 	RECV_REP   // Receiving REQ reply
 };
@@ -42,7 +41,7 @@ static void rest_job_cb(void* arg);
 struct rest_job {
 	nng::aio_view             http_aio;                 // aio from HTTP we must reply to
 	nng::http::res            http_res;                 // HTTP response object
-	job_state                 state = READ_DATA;        // 0 = sending, 1 = receiving
+	job_state                 state = SEND_REQ;         // 0 = sending, 1 = receiving
 	nng::msg                  msg;                      // request message
 	nng::aio                  aio{ rest_job_cb, this }; // request flow
 	nng::ctx                  ctx;                      // context on the request socket
@@ -107,22 +106,6 @@ static void rest_job_cb(void* arg) {
 	nng::aio_view aio = job->aio;
 
 	switch(job->state) {
-	case READ_DATA:
-		{
-			auto result = aio.result();
-			if( result != nng::error::success ) {
-				rest_http_fatal(std::move(job), "read POST data failed", result);
-				return;
-			}
-		}
-		// We got good data.  The message should already be set up,
-		// so at this point we need to just update the state and
-		// start the send.
-		aio.set_msg( std::move(job->msg) );
-		job->state = SEND_REQ;
-		job->ctx.send( aio );
-		job.release();
-		break;
 	case SEND_REQ:
 		{
 			auto result = aio.result();
@@ -173,7 +156,6 @@ static void rest_job_cb(void* arg) {
 void rest_handle(nng_aio* a) {
 	nng::aio_view aio = a;
 	nng::http::req_view req = aio.get_input<nng_http_req>(0);
-	nng::http::conn_view conn = aio.get_input<nng_http_conn>(2);
 
 	auto job = rest_get_job();
 	if( !job ) {
@@ -190,53 +172,21 @@ void rest_handle(nng_aio* a) {
 		return;
 	}
 
+	auto data = req.get_data();
 	job->http_aio = aio;
-	auto clen = req.get_header("Content-Length");
-	if( !clen ) {
-		nng::http::res res = std::move(job->http_res);
-		res.set_status( nng::http::status::length_required );
-		res.set_reason( nullptr );
-		aio.set_output( 0, res.release() );
-		aio.finish();
-
-		rest_recycle_job( std::move(job) );
-		return;
-	}
-	// Arbitrary limit, reject jobs with no data, or more than 128KB.
-	// Note that normally REQ/REP sockets don't transport over 1MB, so
-	// if you adjust this to be more than that, you'll need to also
-	// set the NNG_OPT_RECVMAXSIZE option.
-	size_t sz = atoi(clen);
-	if((sz < 1) || (sz > 128 * 1024)) {
-		nng::http::res res = std::move(job->http_res);
-		res.set_status( nng::http::status::bad_request );
-		aio.set_output(0, res.release());
-		aio.finish();
-		rest_recycle_job( std::move(job) );
-		return;
-	}
 
 	try {
-		job->msg = nng::msg(sz);
-	}
-	catch( const nng::exception& e ) {
-		rest_http_fatal(std::move(job), e.who(), e.get_error());
-		return;
-	}
-	
-	try {
-		job->aio.set_iov( job->msg.body().get() );
+		job->msg = nng::msg(data.size());
 	}
 	catch( const nng::exception& e ) {
 		rest_http_fatal(std::move(job), e.who(), e.get_error());
 		return;
 	}
 
-	job->state = READ_DATA;
-	// This submits the request, and the state machine takes over
-	// all further processing.
-	
-	conn.read_all(job->aio);
+	memcpy(job->msg.body().data(), data.data(), data.size());
+	job->aio.set_msg( std::move(job->msg) );
+	job->state = SEND_REQ;
+	job->ctx.send(job->aio);
 	job.release();
 }
 
@@ -263,6 +213,12 @@ nng::http::server rest_start(uint16_t port) {
 	// using the function "rest_handle" declared above.
 	nng::http::handler handler( url->u_path, rest_handle );
 	handler.set_method( nng::http::verb::post );
+	// We want to collect the body, and we (arbitrarily) limit this to
+	// 128KB.  The default limit is 1MB.  You can explicitly collect
+	// the deta yourself with another HTTP read transaction by disabling
+	// this, but that's a lot of work, especially if you want to handle
+	// chunked transfers.
+	handler.collect_body(true, 1024 * 128);
 	server.add_handler( std::move(handler) );
 	server.start();
 	return server;

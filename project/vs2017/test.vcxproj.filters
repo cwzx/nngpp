@@ -34,6 +34,9 @@
     <Filter Include="Header Files\ipc">
       <UniqueIdentifier>{d7fe4db5-1b34-49f1-9aaf-ee997cf015c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\tls">
+      <UniqueIdentifier>{239a3cc3-a01a-4f85-8b37-9d3801ee0d5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\test\main.cpp">
@@ -316,6 +319,24 @@
     </ClInclude>
     <ClInclude Include="..\..\include\nngpp\ipc\dialer_view.h">
       <Filter>Header Files\ipc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\tls\tls_view.h">
+      <Filter>Header Files\tls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\tls\dialer.h">
+      <Filter>Header Files\tls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\tls\dialer_view.h">
+      <Filter>Header Files\tls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\tls\listener.h">
+      <Filter>Header Files\tls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\tls\listener_view.h">
+      <Filter>Header Files\tls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\tls\tls.h">
+      <Filter>Header Files\tls</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

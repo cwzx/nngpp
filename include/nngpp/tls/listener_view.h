@@ -1,24 +1,24 @@
-#ifndef NNGPP_TCP_LISTENER_VIEW_H
-#define NNGPP_TCP_LISTENER_VIEW_H
-#include <nng/supplemental/tcp/tcp.h>
+#ifndef NNGPP_TLS_LISTENER_VIEW_H
+#define NNGPP_TLS_LISTENER_VIEW_H
+#include <nng/supplemental/tls/tls.h>
 #include <nngpp/aio_view.h>
 
-namespace nng { namespace tcp {
+namespace nng { namespace tls {
 
 struct listener_view {
 protected:
-	nng_tcp_listener* d = nullptr;
+	nng_tls_listener* d = nullptr;
 	
 public:
 	listener_view() = default;
 	
-	listener_view( nng_tcp_listener* d ) noexcept : d(d) {}
+	listener_view( nng_tls_listener* d ) noexcept : d(d) {}
 
-	nng_tcp_listener* get() const noexcept {
+	nng_tls_listener* get() const noexcept {
 		return d;
 	}
 
-	nng_tcp_listener* operator->() const noexcept {
+	nng_tls_listener* operator->() const noexcept {
 		return d;
 	}
 
@@ -27,24 +27,24 @@ public:
 	}
 	
 	void close() const noexcept {
-		nng_tcp_listener_close(d);
+		nng_tls_listener_close(d);
 	}
 	
 	void listen( nng_sockaddr& addr ) const {
-		int r = nng_tcp_listener_listen(d,&addr);
+		int r = nng_tls_listener_listen(d,&addr);
 		if( r != 0 ) {
-			throw exception(r,"nng_tcp_listener_listen");
+			throw exception(r,"nng_tls_listener_listen");
 		}
 	}
 
 	void accept( aio_view a ) const noexcept {
-		nng_tcp_listener_accept(d,a.get());
+		nng_tls_listener_accept(d,a.get());
 	}
 	
 	void get_opt( const char* name, void* val, size_t* szp ) const {
-		int r = nng_tcp_listener_getopt(d,name,val,szp);
+		int r = nng_tls_listener_getopt(d,name,val,szp);
 		if( r != 0 ) {
-			throw exception(r,"nng_tcp_listener_getopt");
+			throw exception(r,"nng_tls_listener_getopt");
 		}
 	}
 	
@@ -57,9 +57,9 @@ public:
 	}
 	
 	void set_opt( const char* name, const void* val, size_t sz ) const {
-		int r = nng_tcp_listener_setopt(d,name,val,sz);
+		int r = nng_tls_listener_setopt(d,name,val,sz);
 		if( r != 0 ) {
-			throw exception(r,"nng_tcp_listener_setopt");
+			throw exception(r,"nng_tls_listener_setopt");
 		}
 	}
 	

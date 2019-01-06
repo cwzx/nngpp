@@ -70,59 +70,59 @@ inline const char* to_name( option o ) noexcept {
 	return detail::option_names[(int)o];
 }
 
-inline size_t get_opt_mtu( pipe_view s ) {
+inline size_t get_opt_mtu( nng::pipe_view s ) {
 	return s.get_opt_size( to_name(option::mtu) );
 }
 
-inline uint64_t get_opt_nwid( pipe_view s ) {
+inline uint64_t get_opt_nwid( nng::pipe_view s ) {
 	return s.get_opt_uint64( to_name(option::nwid) );
 }
 
-inline uint64_t get_opt_node( pipe_view s ) {
+inline uint64_t get_opt_node( nng::pipe_view s ) {
 	return s.get_opt_uint64( to_name(option::node) );
 }
 
-inline buffer get_opt_home( dialer_view s ) {
+inline buffer get_opt_home( nng::dialer_view s ) {
 	return s.get_opt_string( to_name(option::home) );
 }
 
-inline void set_opt_home( dialer_view s, const char* v ) {
+inline void set_opt_home( nng::dialer_view s, const char* v ) {
 	s.set_opt_string( to_name(option::home), v );
 }
 
-inline uint64_t get_opt_node( dialer_view s ) {
+inline uint64_t get_opt_node( nng::dialer_view s ) {
 	return s.get_opt_uint64( to_name(option::node) );
 }
 
-inline uint64_t get_opt_nwid( dialer_view s ) {
+inline uint64_t get_opt_nwid( nng::dialer_view s ) {
 	return s.get_opt_uint64( to_name(option::nwid) );
 }
 
-inline status get_opt_network_status( dialer_view s ) {
+inline status get_opt_network_status( nng::dialer_view s ) {
 	return (status)s.get_opt_int( to_name(option::network_status) );
 }
 
-inline buffer get_opt_network_name( dialer_view s ) {
+inline buffer get_opt_network_name( nng::dialer_view s ) {
 	return s.get_opt_string( to_name(option::network_name) );
 }
 
-inline nng_duration get_opt_ping_time( dialer_view s ) {
+inline nng_duration get_opt_ping_time( nng::dialer_view s ) {
 	return s.get_opt_ms( to_name(option::ping_time) );
 }
 
-inline void set_opt_ping_time( dialer_view s, nng_duration v ) {
+inline void set_opt_ping_time( nng::dialer_view s, nng_duration v ) {
 	s.set_opt_ms( to_name(option::ping_time), v );
 }
 
-inline int get_opt_ping_tries( dialer_view s ) {
+inline int get_opt_ping_tries( nng::dialer_view s ) {
 	return s.get_opt_int( to_name(option::ping_tries) );
 }
 
-inline void set_opt_ping_tries( dialer_view s, int v ) {
+inline void set_opt_ping_tries( nng::dialer_view s, int v ) {
 	s.set_opt_int( to_name(option::ping_tries), v );
 }
 
-inline nng_duration get_opt_conn_time( dialer_view s ) {
+inline nng_duration get_opt_conn_time( nng::dialer_view s ) {
 	return s.get_opt_ms( to_name(option::conn_time) );
 }
 

@@ -51,9 +51,9 @@ TEST_CASE("Supplemental TCP", "[tcp]") {
 	nng::aio aio1(nullptr,nullptr);
 	nng::aio aio2(nullptr,nullptr);
 
-	REQUIRE_NOTHROW(c1.set_nodelay(true));
-	REQUIRE_NOTHROW(c2.set_nodelay(true));
-	REQUIRE_NOTHROW(c1.set_keepalive(true));
+	REQUIRE_NOTHROW(set_opt_no_delay(c1,true));
+	REQUIRE_NOTHROW(set_opt_no_delay(c2,true));
+	REQUIRE_NOTHROW(set_opt_keep_alive(c1,true));
 	
 	char buf1[5];
 	memcpy(buf1, "TEST", 5);
@@ -79,7 +79,7 @@ TEST_CASE("Supplemental TCP", "[tcp]") {
 	INFO("Socket name matches");
 	{
 		nng_sockaddr sa2;
-		REQUIRE_NOTHROW(sa2 = c2.sockname());
+		REQUIRE_NOTHROW(sa2 = get_opt_local_address(c2));
 		REQUIRE(sa2.s_in.sa_family == NNG_AF_INET);
 		REQUIRE(sa2.s_in.sa_addr == ip);
 		REQUIRE(sa2.s_in.sa_port == sa.s_in.sa_port);
@@ -88,7 +88,7 @@ TEST_CASE("Supplemental TCP", "[tcp]") {
 	INFO("Peer name matches")
 	{
 		nng_sockaddr sa2;
-		REQUIRE_NOTHROW(sa2 = c1.peername());
+		REQUIRE_NOTHROW(sa2 = get_opt_remote_address(c1));
 		REQUIRE(sa2.s_in.sa_family == NNG_AF_INET);
 		REQUIRE(sa2.s_in.sa_addr == ip);
 		REQUIRE(sa2.s_in.sa_port == sa.s_in.sa_port);

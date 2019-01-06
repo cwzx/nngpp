@@ -41,59 +41,59 @@ inline const char* to_name( option o ) noexcept {
 	return detail::option_names[(int)o];
 }
 
-inline bool get_opt_no_delay( pipe_view s ) {
+inline bool get_opt_no_delay( nng::pipe_view s ) {
 	return s.get_opt_bool( to_name(option::no_delay) );
 }
 
-inline bool get_opt_keep_alive( pipe_view s ) {
+inline bool get_opt_keep_alive( nng::pipe_view s ) {
 	return s.get_opt_bool( to_name(option::keep_alive) );
 }
 
-inline bool get_opt_no_delay( dialer_view s ) {
+inline bool get_opt_no_delay( nng::dialer_view s ) {
 	return s.get_opt_bool( to_name(option::no_delay) );
 }
 
-inline bool get_opt_keep_alive( dialer_view s ) {
+inline bool get_opt_keep_alive( nng::dialer_view s ) {
 	return s.get_opt_bool( to_name(option::keep_alive) );
 }
 
-inline bool get_opt_no_delay( listener_view s ) {
+inline bool get_opt_no_delay( nng::listener_view s ) {
 	return s.get_opt_bool( to_name(option::no_delay) );
 }
 
-inline bool get_opt_keep_alive( listener_view s ) {
+inline bool get_opt_keep_alive( nng::listener_view s ) {
 	return s.get_opt_bool( to_name(option::keep_alive) );
 }
 
-inline bool get_opt_no_delay( socket_view s ) {
+inline bool get_opt_no_delay( nng::socket_view s ) {
 	return s.get_opt_bool( to_name(option::no_delay) );
 }
 
-inline bool get_opt_keep_alive( socket_view s ) {
+inline bool get_opt_keep_alive( nng::socket_view s ) {
 	return s.get_opt_bool( to_name(option::keep_alive) );
 }
 
-inline void set_opt_no_delay( dialer_view s, bool v ) {
+inline void set_opt_no_delay( nng::dialer_view s, bool v ) {
 	s.set_opt_bool( to_name(option::no_delay), v );
 }
 
-inline void set_opt_keep_alive( dialer_view s, bool v ) {
+inline void set_opt_keep_alive( nng::dialer_view s, bool v ) {
 	s.set_opt_bool( to_name(option::keep_alive), v );
 }
 
-inline void set_opt_no_delay( listener_view s, bool v ) {
+inline void set_opt_no_delay( nng::listener_view s, bool v ) {
 	s.set_opt_bool( to_name(option::no_delay), v );
 }
 
-inline void set_opt_keep_alive( listener_view s, bool v ) {
+inline void set_opt_keep_alive( nng::listener_view s, bool v ) {
 	s.set_opt_bool( to_name(option::keep_alive), v );
 }
 
-inline void set_opt_no_delay( socket_view s, bool v ) {
+inline void set_opt_no_delay( nng::socket_view s, bool v ) {
 	s.set_opt_bool( to_name(option::no_delay), v );
 }
 
-inline void set_opt_keep_alive( socket_view s, bool v ) {
+inline void set_opt_keep_alive( nng::socket_view s, bool v ) {
 	s.set_opt_bool( to_name(option::keep_alive), v );
 }
 

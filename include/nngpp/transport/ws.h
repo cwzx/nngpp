@@ -40,19 +40,19 @@ inline const char* to_name( option o ) noexcept {
 	return detail::option_names[(int)o];
 }
 
-inline buffer get_opt_request_headers( pipe_view s ) {
+inline buffer get_opt_request_headers( nng::pipe_view s ) {
 	return s.get_opt_string( to_name(option::request_headers) );
 }
 
-inline buffer get_opt_response_headers( pipe_view s ) {
+inline buffer get_opt_response_headers( nng::pipe_view s ) {
 	return s.get_opt_string( to_name(option::response_headers) );
 }
 
-inline void set_opt_request_headers( dialer_view s, const char* v ) {
+inline void set_opt_request_headers( nng::dialer_view s, const char* v ) {
 	s.set_opt_string( to_name(option::request_headers), v );
 }
 
-inline void set_opt_response_headers( listener_view s, const char* v ) {
+inline void set_opt_response_headers( nng::listener_view s, const char* v ) {
 	s.set_opt_string( to_name(option::response_headers), v );
 }
 

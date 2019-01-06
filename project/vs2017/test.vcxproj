@@ -234,6 +234,12 @@
     <ClInclude Include="..\..\include\nngpp\tcp\listener_view.h" />
     <ClInclude Include="..\..\include\nngpp\tcp\tcp.h" />
     <ClInclude Include="..\..\include\nngpp\tcp\tcp_view.h" />
+    <ClInclude Include="..\..\include\nngpp\tls\dialer.h" />
+    <ClInclude Include="..\..\include\nngpp\tls\dialer_view.h" />
+    <ClInclude Include="..\..\include\nngpp\tls\listener.h" />
+    <ClInclude Include="..\..\include\nngpp\tls\listener_view.h" />
+    <ClInclude Include="..\..\include\nngpp\tls\tls.h" />
+    <ClInclude Include="..\..\include\nngpp\tls\tls_view.h" />
     <ClInclude Include="..\..\include\nngpp\transport\inproc.h" />
     <ClInclude Include="..\..\include\nngpp\transport\ipc.h" />
     <ClInclude Include="..\..\include\nngpp\transport\tcp.h" />

@@ -1,24 +1,24 @@
-#ifndef NNGPP_TCP_DIALER_VIEW_H
-#define NNGPP_TCP_DIALER_VIEW_H
-#include <nng/supplemental/tcp/tcp.h>
+#ifndef NNGPP_TLS_DIALER_VIEW_H
+#define NNGPP_TLS_DIALER_VIEW_H
+#include <nng/supplemental/tls/tls.h>
 #include <nngpp/aio_view.h>
 
-namespace nng { namespace tcp {
+namespace nng { namespace tls {
 
 struct dialer_view {
 protected:
-	nng_tcp_dialer* d = nullptr;
+	nng_tls_dialer* d = nullptr;
 	
 public:
 	dialer_view() = default;
 	
-	dialer_view( nng_tcp_dialer* d ) noexcept : d(d) {}
+	dialer_view( nng_tls_dialer* d ) noexcept : d(d) {}
 
-	nng_tcp_dialer* get() const noexcept {
+	nng_tls_dialer* get() const noexcept {
 		return d;
 	}
 
-	nng_tcp_dialer* operator->() const noexcept {
+	nng_tls_dialer* operator->() const noexcept {
 		return d;
 	}
 
@@ -27,17 +27,17 @@ public:
 	}
 	
 	void close() const noexcept {
-		nng_tcp_dialer_close(d);
+		nng_tls_dialer_close(d);
 	}
 	
 	void dial( const nng_sockaddr& addr, aio_view a ) const noexcept {
-		nng_tcp_dialer_dial(d,&addr,a.get());
+		nng_tls_dialer_dial(d,&addr,a.get());
 	}
 	
 	void get_opt( const char* name, void* val, size_t* szp ) const {
-		int r = nng_tcp_dialer_getopt(d,name,val,szp);
+		int r = nng_tls_dialer_getopt(d,name,val,szp);
 		if( r != 0 ) {
-			throw exception(r,"nng_tcp_dialer_getopt");
+			throw exception(r,"nng_tls_dialer_getopt");
 		}
 	}
 	
@@ -50,9 +50,9 @@ public:
 	}
 	
 	void set_opt( const char* name, const void* val, size_t sz ) const {
-		int r = nng_tcp_dialer_setopt(d,name,val,sz);
+		int r = nng_tls_dialer_setopt(d,name,val,sz);
 		if( r != 0 ) {
-			throw exception(r,"nng_tcp_dialer_setopt");
+			throw exception(r,"nng_tls_dialer_setopt");
 		}
 	}
 	
