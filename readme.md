@@ -149,6 +149,9 @@ nng::mtx mtx2;                // default constructor gives null mutex
 | ipc connection     | `nng_ipc*`          | `nng::ipc::ipc_view`      | `nng::ipc::ipc`      |
 | ipc dialer         | `nng_ipc_dialer*`   | `nng::ipc::dialer_view`   | `nng::ipc::dialer`   |
 | ipc listener       | `nng_ipc_listener*` | `nng::ipc::listener_view` | `nng::ipc::listener` |
+| tls connection     | `nng_tls*`          | `nng::tls::tls_view`      | `nng::tls::tls`      |
+| tls dialer         | `nng_tls_dialer*`   | `nng::tls::dialer_view`   | `nng::tls::dialer`   |
+| tls listener       | `nng_tls_listener*` | `nng::tls::listener_view` | `nng::tls::listener` |
 
 ### Error handling
 
