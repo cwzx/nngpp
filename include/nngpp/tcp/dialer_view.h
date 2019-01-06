@@ -1,7 +1,7 @@
 #ifndef NNGPP_TCP_DIALER_VIEW_H
 #define NNGPP_TCP_DIALER_VIEW_H
-#include <nng/supplemental/tcp/tcp.h>
 #include <nngpp/aio_view.h>
+#include <nng/supplemental/tcp/tcp.h>
 
 namespace nng { namespace tcp {
 

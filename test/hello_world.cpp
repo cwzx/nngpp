@@ -191,7 +191,7 @@ TEST_CASE( "WSS Socket", "[wss]" ) {
 	server_cfg.config_own_cert(cert,key);
 
 	socket rep_socket = rep::open();	
-	listener listener( rep_socket.get(), "wss://localhost:8888" );
+	listener listener( rep_socket.get(), "wss://localhost:8889" );
 	set_opt_config( listener, server_cfg );
 	listener.start();
 
@@ -201,7 +201,7 @@ TEST_CASE( "WSS Socket", "[wss]" ) {
 		.config_auth_mode(tls::auth_mode::none);
 
 	socket req_socket = req::open();
-	dialer dialer( req_socket.get(), "wss://localhost:8888" );
+	dialer dialer( req_socket.get(), "wss://localhost:8889" );
 	set_opt_config( dialer, client_cfg );
 	dialer.start();
 

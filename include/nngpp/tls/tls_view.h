@@ -1,9 +1,9 @@
 #ifndef NNGPP_TLS_TLS_VIEW_H
 #define NNGPP_TLS_TLS_VIEW_H
-#include <nng/supplemental/tls/tls.h>
-#include <nngpp/transport/tls.h>
-#include <nngpp/transport/tcp.h>
 #include <nngpp/aio_view.h>
+#include <nngpp/transport/tcp.h>
+#include <nngpp/transport/tls.h>
+#include <nng/supplemental/tls/tls.h>
 
 namespace nng { namespace tls {
 

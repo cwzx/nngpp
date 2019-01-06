@@ -1,7 +1,7 @@
 #ifndef NNGPP_TCP_LISTENER_VIEW_H
 #define NNGPP_TCP_LISTENER_VIEW_H
-#include <nng/supplemental/tcp/tcp.h>
 #include <nngpp/aio_view.h>
+#include <nng/supplemental/tcp/tcp.h>
 
 namespace nng { namespace tcp {
 
@@ -30,7 +30,7 @@ public:
 		nng_tcp_listener_close(d);
 	}
 	
-	void listen( nng_sockaddr& addr ) const {
+	void listen( const nng_sockaddr& addr ) const {
 		int r = nng_tcp_listener_listen(d,&addr);
 		if( r != 0 ) {
 			throw exception(r,"nng_tcp_listener_listen");

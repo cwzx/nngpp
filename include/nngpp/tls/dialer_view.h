@@ -1,7 +1,7 @@
 #ifndef NNGPP_TLS_DIALER_VIEW_H
 #define NNGPP_TLS_DIALER_VIEW_H
-#include <nng/supplemental/tls/tls.h>
 #include <nngpp/aio_view.h>
+#include <nng/supplemental/tls/tls.h>
 
 namespace nng { namespace tls {
 
@@ -68,11 +68,11 @@ inline nng_sockaddr get_opt_local_address( dialer_view d ) {
 }
 
 inline bool get_opt_no_delay( dialer_view d ) {
-	return d.get_opt<bool>( to_name(option::no_delay) );
+	return d.get_opt<bool>( to_name(tcp::option::no_delay) );
 }
 
 inline bool get_opt_keep_alive( dialer_view d ) {
-	return d.get_opt<bool>( to_name(option::keep_alive) );
+	return d.get_opt<bool>( to_name(tcp::option::keep_alive) );
 }
 
 inline void set_opt_local_address( dialer_view d, const nng_sockaddr& v ) {
@@ -80,11 +80,11 @@ inline void set_opt_local_address( dialer_view d, const nng_sockaddr& v ) {
 }
 
 inline void set_opt_no_delay( dialer_view d, bool v ) {
-	d.set_opt( to_name(option::no_delay), v );
+	d.set_opt( to_name(tcp::option::no_delay), v );
 }
 
 inline void set_opt_keep_alive( dialer_view d, bool v ) {
-	d.set_opt( to_name(option::keep_alive), v );
+	d.set_opt( to_name(tcp::option::keep_alive), v );
 }
 
 }}

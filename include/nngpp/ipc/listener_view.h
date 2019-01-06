@@ -1,7 +1,7 @@
 #ifndef NNGPP_IPC_LISTENER_VIEW_H
 #define NNGPP_IPC_LISTENER_VIEW_H
-#include <nng/supplemental/ipc/ipc.h>
 #include <nngpp/aio_view.h>
+#include <nng/supplemental/ipc/ipc.h>
 
 namespace nng { namespace ipc {
 
@@ -30,7 +30,7 @@ public:
 		nng_ipc_listener_close(d);
 	}
 	
-	void listen( nng_sockaddr& addr ) const {
+	void listen( const nng_sockaddr& addr ) const {
 		int r = nng_ipc_listener_listen(d,&addr);
 		if( r != 0 ) {
 			throw exception(r,"nng_ipc_listener_listen");

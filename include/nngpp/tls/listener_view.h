@@ -1,7 +1,7 @@
 #ifndef NNGPP_TLS_LISTENER_VIEW_H
 #define NNGPP_TLS_LISTENER_VIEW_H
-#include <nng/supplemental/tls/tls.h>
 #include <nngpp/aio_view.h>
+#include <nng/supplemental/tls/tls.h>
 
 namespace nng { namespace tls {
 
@@ -30,7 +30,7 @@ public:
 		nng_tls_listener_close(d);
 	}
 	
-	void listen( nng_sockaddr& addr ) const {
+	void listen( const nng_sockaddr& addr ) const {
 		int r = nng_tls_listener_listen(d,&addr);
 		if( r != 0 ) {
 			throw exception(r,"nng_tls_listener_listen");
@@ -75,19 +75,19 @@ inline nng_sockaddr get_opt_local_address( listener_view l ) {
 }
 
 inline bool get_opt_no_delay( listener_view l ) {
-	return l.get_opt<bool>( to_name(option::no_delay) );
+	return l.get_opt<bool>( to_name(tcp::option::no_delay) );
 }
 
 inline bool get_opt_keep_alive( listener_view l ) {
-	return l.get_opt<bool>( to_name(option::keep_alive) );
+	return l.get_opt<bool>( to_name(tcp::option::keep_alive) );
 }
 
 inline void set_opt_no_delay( listener_view l, bool v ) {
-	l.set_opt( to_name(option::no_delay), v );
+	l.set_opt( to_name(tcp::option::no_delay), v );
 }
 
 inline void set_opt_keep_alive( listener_view l, bool v ) {
-	l.set_opt( to_name(option::keep_alive), v );
+	l.set_opt( to_name(tcp::option::keep_alive), v );
 }
 
 }}

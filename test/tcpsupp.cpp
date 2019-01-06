@@ -7,7 +7,7 @@ namespace {
 static uint8_t loopback[4] = { 127, 0, 0, 1 };
 }
 
-TEST_CASE("Supplemental TCP", "[tcp]") {
+TEST_CASE("Supplemental TCP", "[tcpapi]") {
 	
 	INFO("We can create a dialer and listener");
 	auto d = nng::tcp::make_dialer();
@@ -25,8 +25,10 @@ TEST_CASE("Supplemental TCP", "[tcp]") {
 	sa.s_in.sa_port = 0;
 
 	REQUIRE_NOTHROW(l.listen(sa));
-	REQUIRE(sa.s_in.sa_port != 0);
+	REQUIRE_NOTHROW(sa = get_opt_local_address(l));
+	REQUIRE(sa.s_in.sa_family == NNG_AF_INET);
 	REQUIRE(sa.s_in.sa_addr == ip);
+	REQUIRE(sa.s_in.sa_port != 0);
 
 	INFO("We can dial it");
 	nng::aio daio(nullptr,nullptr);

@@ -1,8 +1,8 @@
 #ifndef NNGPP_IPC_IPC_VIEW_H
 #define NNGPP_IPC_IPC_VIEW_H
-#include <nng/supplemental/ipc/ipc.h>
 #include <nngpp/aio_view.h>
 #include <nngpp/transport/ipc.h>
+#include <nng/supplemental/ipc/ipc.h>
 
 namespace nng { namespace ipc {
 
