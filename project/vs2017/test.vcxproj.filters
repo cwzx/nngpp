@@ -28,14 +28,8 @@
     <Filter Include="Header Files\platform">
       <UniqueIdentifier>{2f9e07c6-2780-4829-97cf-305e55cf006d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\tcp">
-      <UniqueIdentifier>{88a9c3e3-7e0a-4343-a4eb-5c5f8738dbcf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ipc">
-      <UniqueIdentifier>{d7fe4db5-1b34-49f1-9aaf-ee997cf015c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\tls">
-      <UniqueIdentifier>{239a3cc3-a01a-4f85-8b37-9d3801ee0d5a}</UniqueIdentifier>
+    <Filter Include="Header Files\stream">
+      <UniqueIdentifier>{be9b39f6-a683-44c1-8ec8-a1fc3dfe846b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -284,59 +278,23 @@
     <ClInclude Include="..\..\include\nngpp\stat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\tcp\tcp.h">
-      <Filter>Header Files\tcp</Filter>
+    <ClInclude Include="..\..\include\nngpp\stream\dialer.h">
+      <Filter>Header Files\stream</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\tcp\tcp_view.h">
-      <Filter>Header Files\tcp</Filter>
+    <ClInclude Include="..\..\include\nngpp\stream\dialer_view.h">
+      <Filter>Header Files\stream</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\tcp\dialer.h">
-      <Filter>Header Files\tcp</Filter>
+    <ClInclude Include="..\..\include\nngpp\stream\listener.h">
+      <Filter>Header Files\stream</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\tcp\dialer_view.h">
-      <Filter>Header Files\tcp</Filter>
+    <ClInclude Include="..\..\include\nngpp\stream\listener_view.h">
+      <Filter>Header Files\stream</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\tcp\listener.h">
-      <Filter>Header Files\tcp</Filter>
+    <ClInclude Include="..\..\include\nngpp\stream\stream.h">
+      <Filter>Header Files\stream</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\tcp\listener_view.h">
-      <Filter>Header Files\tcp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\ipc\ipc.h">
-      <Filter>Header Files\ipc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\ipc\ipc_view.h">
-      <Filter>Header Files\ipc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\ipc\listener.h">
-      <Filter>Header Files\ipc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\ipc\listener_view.h">
-      <Filter>Header Files\ipc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\ipc\dialer.h">
-      <Filter>Header Files\ipc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\ipc\dialer_view.h">
-      <Filter>Header Files\ipc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\tls\tls_view.h">
-      <Filter>Header Files\tls</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\tls\dialer.h">
-      <Filter>Header Files\tls</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\tls\dialer_view.h">
-      <Filter>Header Files\tls</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\tls\listener.h">
-      <Filter>Header Files\tls</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\tls\listener_view.h">
-      <Filter>Header Files\tls</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\nngpp\tls\tls.h">
-      <Filter>Header Files\tls</Filter>
+    <ClInclude Include="..\..\include\nngpp\stream\stream_view.h">
+      <Filter>Header Files\stream</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

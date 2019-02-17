@@ -121,37 +121,32 @@ nng::mtx mtx2;                // default constructor gives null mutex
 
 ### Summary
 
-| Name               | nng handle          | nngpp view                | nngpp RAII           |
-|:-------------------|:--------------------|:--------------------------|:---------------------|
-| socket             | `nng_socket`        | `nng::socket_view`        | `nng::socket`        |
-| context            | `nng_ctx`           | `nng::ctx_view`           | `nng::ctx`           |
-| dialer             | `nng_dialer`        | `nng::dialer_view`        | `nng::dialer`        |
-| listener           | `nng_listener`      | `nng::listener_view`      | `nng::listener`      |
-| pipe               | `nng_pipe`          | `nng::pipe_view`          | `nng::pipe`          |
-| message            | `nng_msg*`          | `nng::msg_view`           | `nng::msg`           |
-| async i/o          | `nng_aio*`          | `nng::aio_view`           | `nng::aio`           |
-| url                | `nng_url*`          | `nng::url_view`           | `nng::url`           |
-| buffer             | `void*, size_t`     | `nng::view`               | `nng::buffer`        |
-| stat               | `nng_stat*`         | `nng::stat_view`          | `nng::stat`          |
-| thread             | `nng_thread*`       | `nng::thread_view`        | `nng::thread`        |
-| mutex              | `nng_mtx*`          | `nng::mtx_view`           | `nng::mtx`           |
-| condition variable | `nng_cv*`           | `nng::cv_view`            | `nng::cv`            |
-| tls config         | `nng_tls_config*`   | `nng::tls::config_view`   | `nng::tls::config`   |
-| http client        | `nng_http_client*`  | `nng::http::client_view`  | `nng::http::client`  |
-| http connection    | `nng_http_conn*`    | `nng::http::conn_view`    | `nng::http::conn`    |
-| http handler       | `nng_http_handler*` | `nng::http::handler_view` | `nng::http::handler` |
-| http request       | `nng_http_req*`     | `nng::http::req_view`     | `nng::http::req`     |
-| http response      | `nng_http_res*`     | `nng::http::res_view`     | `nng::http::res`     |
-| http server        | `nng_http_server*`  | `nng::http::server_view`  | `nng::http::server`  |
-| tcp connection     | `nng_tcp*`          | `nng::tcp::tcp_view`      | `nng::tcp::tcp`      |
-| tcp dialer         | `nng_tcp_dialer*`   | `nng::tcp::dialer_view`   | `nng::tcp::dialer`   |
-| tcp listener       | `nng_tcp_listener*` | `nng::tcp::listener_view` | `nng::tcp::listener` |
-| ipc connection     | `nng_ipc*`          | `nng::ipc::ipc_view`      | `nng::ipc::ipc`      |
-| ipc dialer         | `nng_ipc_dialer*`   | `nng::ipc::dialer_view`   | `nng::ipc::dialer`   |
-| ipc listener       | `nng_ipc_listener*` | `nng::ipc::listener_view` | `nng::ipc::listener` |
-| tls connection     | `nng_tls*`          | `nng::tls::tls_view`      | `nng::tls::tls`      |
-| tls dialer         | `nng_tls_dialer*`   | `nng::tls::dialer_view`   | `nng::tls::dialer`   |
-| tls listener       | `nng_tls_listener*` | `nng::tls::listener_view` | `nng::tls::listener` |
+| Name               | nng handle             | nngpp view                   | nngpp RAII              |
+|:-------------------|:-----------------------|:-----------------------------|:------------------------|
+| socket             | `nng_socket`           | `nng::socket_view`           | `nng::socket`           |
+| context            | `nng_ctx`              | `nng::ctx_view`              | `nng::ctx`              |
+| dialer             | `nng_dialer`           | `nng::dialer_view`           | `nng::dialer`           |
+| listener           | `nng_listener`         | `nng::listener_view`         | `nng::listener`         |
+| pipe               | `nng_pipe`             | `nng::pipe_view`             | `nng::pipe`             |
+| message            | `nng_msg*`             | `nng::msg_view`              | `nng::msg`              |
+| async i/o          | `nng_aio*`             | `nng::aio_view`              | `nng::aio`              |
+| url                | `nng_url*`             | `nng::url_view`              | `nng::url`              |
+| buffer             | `void*, size_t`        | `nng::view`                  | `nng::buffer`           |
+| stat               | `nng_stat*`            | `nng::stat_view`             | `nng::stat`             |
+| thread             | `nng_thread*`          | `nng::thread_view`           | `nng::thread`           |
+| mutex              | `nng_mtx*`             | `nng::mtx_view`              | `nng::mtx`              |
+| condition variable | `nng_cv*`              | `nng::cv_view`               | `nng::cv`               |
+| tls config         | `nng_tls_config*`      | `nng::tls::config_view`      | `nng::tls::config`      |
+| http client        | `nng_http_client*`     | `nng::http::client_view`     | `nng::http::client`     |
+| http connection    | `nng_http_conn*`       | `nng::http::conn_view`       | `nng::http::conn`       |
+| http handler       | `nng_http_handler*`    | `nng::http::handler_view`    | `nng::http::handler`    |
+| http request       | `nng_http_req*`        | `nng::http::req_view`        | `nng::http::req`        |
+| http response      | `nng_http_res*`        | `nng::http::res_view`        | `nng::http::res`        |
+| http server        | `nng_http_server*`     | `nng::http::server_view`     | `nng::http::server`     |
+| stream             | `nng_stream*`          | `nng::stream::stream_view`   | `nng::stream::stream`   |
+| stream dialer      | `nng_stream_dialer*`   | `nng::stream::dialer_view`   | `nng::stream::dialer`   |
+| stream listener    | `nng_stream_listener*` | `nng::stream::listener_view` | `nng::stream::listener` |
+
 
 ### Error handling
 

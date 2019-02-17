@@ -1,36 +1,26 @@
 #include <catch2/catch.hpp>
 #include <cstring>
 #include <nngpp/nngpp.h>
-#include <nngpp/ipc/ipc.h>
-
-namespace {
-static uint8_t loopback[4] = { 127, 0, 0, 1 };
-}
 
 TEST_CASE("Supplemental IPC", "[ipc]") {
 	
 	INFO("We can create a dialer and listener");
-	auto d = nng::ipc::make_dialer();
-	auto l = nng::ipc::make_listener();
+	auto url = "ipc:///tmp/ipcsupp_test";
+
+	auto d = nng::stream::dialer(url);
 	REQUIRE(d);
+	auto l = nng::stream::listener(url);
 	REQUIRE(l);
 	
-	INFO("Listener listens (wildcard)");
-	uint32_t ip;
-	memcpy(&ip, loopback, 4);
-
-	nng_sockaddr sa;
-	sa.s_ipc.sa_family = NNG_AF_IPC;
-	snprintf(sa.s_ipc.sa_path, sizeof(sa.s_ipc.sa_path), "%s", "/tmp/ipc_supp_test");
-
-	REQUIRE_NOTHROW(l.listen(sa));
+	INFO("Listener listens");
+	REQUIRE_NOTHROW(l.listen());
 
 	INFO("We can dial it");
 	nng::aio daio(nullptr,nullptr);
 	nng::aio laio(nullptr,nullptr);
 	nng::aio maio(nullptr,nullptr);
 
-	d.dial(sa, daio);
+	d.dial(daio);
 	l.accept(laio);
 
 	daio.wait();
@@ -39,8 +29,8 @@ TEST_CASE("Supplemental IPC", "[ipc]") {
 	REQUIRE(daio.result() == nng::error::success);
 	REQUIRE(laio.result() == nng::error::success);
 
-	nng::ipc::ipc c1( daio.get_output<nng_ipc>(0) );
-	nng::ipc::ipc c2( laio.get_output<nng_ipc>(0) );
+	nng::stream::stream c1( daio.get_output<nng_stream>(0) );
+	nng::stream::stream c2( laio.get_output<nng_stream>(0) );
 	REQUIRE(c1);
 	REQUIRE(c2);
 	
@@ -72,9 +62,9 @@ TEST_CASE("Supplemental IPC", "[ipc]") {
 	INFO("Socket name matches");
 	{
 		nng_sockaddr sa2;
-		REQUIRE_NOTHROW(sa2 = nng::ipc::get_opt_local_address(c2));
+		REQUIRE_NOTHROW(sa2 = c2.get_addr(to_name(nng::option::local_address)));
 		REQUIRE(sa2.s_ipc.sa_family == NNG_AF_IPC);
-		REQUIRE(strcmp(sa2.s_ipc.sa_path,sa.s_ipc.sa_path) == 0);
+		REQUIRE(strcmp(sa2.s_ipc.sa_path, url + strlen("ipc://")) == 0);
 	}
 
 }

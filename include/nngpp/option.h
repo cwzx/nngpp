@@ -4,6 +4,17 @@
 
 namespace nng {
 
+enum option_type {
+	bool_,
+	int_,
+	ms,
+	size,
+	uint64,
+	ptr,
+	string,
+	addr,
+};
+
 enum class option {
 	socket_name,        // string
 	raw,                // bool
@@ -33,7 +44,7 @@ inline
 #else
 static
 #endif
-const char* const option_names[] = {
+constexpr const char* option_names[] = {
 	NNG_OPT_SOCKNAME,
 	NNG_OPT_RAW,
 	NNG_OPT_PROTO,
@@ -55,10 +66,41 @@ const char* const option_names[] = {
 	NNG_OPT_RECONNMAXT
 };
 
+#if __cpp_inline_variables >= 201606
+inline
+#else
+static
+#endif
+constexpr option_type option_types[] = {
+	option_type::string,
+	option_type::bool_,
+	option_type::int_,
+	option_type::string,
+	option_type::int_,
+	option_type::string,
+	option_type::int_,
+	option_type::int_,
+	option_type::int_,
+	option_type::int_,
+	option_type::ms,
+	option_type::ms,
+	option_type::addr,
+	option_type::addr,
+	option_type::string,
+	option_type::int_,
+	option_type::size,
+	option_type::ms,
+	option_type::ms
+};
+
 }
 
-inline const char* to_name( option o ) {
+constexpr const char* to_name( option o ) noexcept {
 	return detail::option_names[(int)o];
+}
+
+constexpr option_type to_type( option o ) noexcept {
+	return detail::option_types[(int)o];
 }
 
 }

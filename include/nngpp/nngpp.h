@@ -8,4 +8,7 @@
 #include "aio.h"
 #include "url.h"
 #include "stat.h"
+#include "stream/dialer.h"
+#include "stream/listener.h"
+#include "stream/stream.h"
 #endif
