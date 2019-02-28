@@ -126,7 +126,7 @@ public:
 	}
 	
 	void pipe_notify( pipe_ev ev, nng_pipe_cb cb, void* arg ) const {
-		int r = nng_pipe_notify( s, (int)ev, cb, arg );
+		int r = nng_pipe_notify( s, (nng_pipe_ev)(int)ev, cb, arg );
 		if( r != 0 ) {
 			throw exception(r,"nng_pipe_notify");
 		}

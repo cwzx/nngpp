@@ -39,7 +39,7 @@ bool expect(testcase* t, int* vp, int v) {
 	return ok;
 }
 
-void notify(nng_pipe pp, int act, void* arg) {
+void notify(nng_pipe pp, nng_pipe_ev act, void* arg) {
 	 auto t = (testcase*)arg;
 	 nng::pipe_view p = pp;
 	 
@@ -75,7 +75,7 @@ void notify(nng_pipe pp, int act, void* arg) {
 	t->cv.wake_all();
 }
 
-void reject(nng_pipe pp, int act, void* arg) {
+void reject(nng_pipe pp, nng_pipe_ev act, void* arg) {
 	auto t = (testcase*)arg;
 	notify(pp, act, arg);
 	
