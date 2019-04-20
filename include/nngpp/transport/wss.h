@@ -1,10 +1,7 @@
 #ifndef NNGPP_TRANSPORT_WSS_H
 #define NNGPP_TRANSPORT_WSS_H
 #include <nngpp/error.h>
-
-extern "C" {
 #include <nng/transport/ws/websocket.h>
-}
 
 namespace nng { namespace wss {
 

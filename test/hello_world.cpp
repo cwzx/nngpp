@@ -149,7 +149,7 @@ TEST_CASE( "TLS Socket", "[tls]" ) {
 	server_cfg.config_own_cert(cert,key);
 
 	socket rep_socket = rep::open();	
-	listener listener( rep_socket.get(), "tls+tcp://localhost:8888" );
+	listener listener( rep_socket.get(), "tls+tcp://localhost:8887" );
 	set_opt_config( listener, server_cfg );
 	listener.start();
 
@@ -159,7 +159,7 @@ TEST_CASE( "TLS Socket", "[tls]" ) {
 		.config_auth_mode(tls::auth_mode::none);
 
 	socket req_socket = req::open();
-	dialer dialer( req_socket.get(), "tls+tcp://localhost:8888" );
+	dialer dialer( req_socket.get(), "tls+tcp://localhost:8887" );
 	set_opt_config( dialer, client_cfg );
 	dialer.start();
 

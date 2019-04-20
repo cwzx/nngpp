@@ -4,10 +4,7 @@
 #include <nngpp/dialer_view.h>
 #include <nngpp/pipe_view.h>
 #include <nngpp/socket_view.h>
-
-extern "C" {
 #include <nng/transport/tcp/tcp.h>
-}
 
 namespace nng { namespace tcp {
 

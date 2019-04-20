@@ -133,131 +133,147 @@ public:
 	}
 	
 	void set_opt( const char* name, view v ) const {
-		int r = nng_setopt(s,name,v.data(),v.size());
+		int r = nng_socket_set(s,name,v.data(),v.size());
 		if( r != 0 ) {
-			throw exception(r,"nng_setopt");
+			throw exception(r,"nng_socket_set");
 		}
 	}
 	
 	void set_opt_bool( const char* name, bool value ) const {
-		int r = nng_setopt_bool(s,name,value);
+		int r = nng_socket_set_bool(s,name,value);
 		if( r != 0 ) {
-			throw exception(r,"nng_setopt_bool");
+			throw exception(r,"nng_socket_set_bool");
 		}
 	}
 	
 	void set_opt_int( const char* name, int value ) const {
-		int r = nng_setopt_int(s,name,value);
+		int r = nng_socket_set_int(s,name,value);
 		if( r != 0 ) {
-			throw exception(r,"nng_setopt_int");
-		}
-	}
-	
-	void set_opt_ms( const char* name, nng_duration value ) const {
-		int r = nng_setopt_ms(s,name,value);
-		if( r != 0 ) {
-			throw exception(r,"nng_setopt_ms");
+			throw exception(r,"nng_socket_set_int");
 		}
 	}
 	
 	void set_opt_size( const char* name, size_t value ) const {
-		int r = nng_setopt_size(s,name,value);
+		int r = nng_socket_set_size(s,name,value);
 		if( r != 0 ) {
-			throw exception(r,"nng_setopt_size");
+			throw exception(r,"nng_socket_set_size");
 		}
 	}
 	
 	void set_opt_uint64( const char* name, uint64_t value ) const {
-		int r = nng_setopt_uint64(s,name,value);
+		int r = nng_socket_set_uint64(s,name,value);
 		if( r != 0 ) {
-			throw exception(r,"nng_setopt_uint64");
+			throw exception(r,"nng_socket_set_uint64");
 		}
 	}
 	
 	void set_opt_string( const char* name, const char* value ) const {
-		int r = nng_setopt_string(s,name,value);
+		int r = nng_socket_set_string(s,name,value);
 		if( r != 0 ) {
-			throw exception(r,"nng_setopt_string");
+			throw exception(r,"nng_socket_set_string");
 		}
 	}
 	
 	void set_opt_ptr( const char* name, void* value ) const {
-		int r = nng_setopt_ptr(s,name,value);
+		int r = nng_socket_set_ptr(s,name,value);
 		if( r != 0 ) {
-			throw exception(r,"nng_setopt_ptr");
+			throw exception(r,"nng_socket_set_ptr");
+		}
+	}
+	
+	void set_opt_ms( const char* name, nng_duration value ) const {
+		int r = nng_socket_set_ms(s,name,value);
+		if( r != 0 ) {
+			throw exception(r,"nng_socket_set_ms");
+		}
+	}
+	
+	void set_opt_addr( const char* name, const nng_sockaddr* value ) const {
+		int r = nng_socket_set_addr(s,name,value);
+		if( r != 0 ) {
+			throw exception(r,"nng_socket_set_addr");
 		}
 	}
 	
 	size_t get_opt( const char* name, buffer& out ) const {
 		size_t size = out.size();
-		int r = nng_getopt(s,name,out.data(),&size);
+		int r = nng_socket_get(s,name,out.data(),&size);
 		if( r != 0 ) {
-			throw exception(r,"nng_getopt");
+			throw exception(r,"nng_socket_get");
 		}
 		return size;
 	}
 	
 	bool get_opt_bool( const char* name ) const {
 		bool out;
-		int r = nng_getopt_bool(s,name,&out);
+		int r = nng_socket_get_bool(s,name,&out);
 		if( r != 0 ) {
-			throw exception(r,"nng_getopt_bool");
+			throw exception(r,"nng_socket_get_bool");
 		}
 		return out;
 	}
 	
 	int get_opt_int( const char* name ) const {
 		int out;
-		int r = nng_getopt_int(s,name,&out);
+		int r = nng_socket_get_int(s,name,&out);
 		if( r != 0 ) {
-			throw exception(r,"nng_getopt_int");
-		}
-		return out;
-	}
-	
-	nng_duration get_opt_ms( const char* name ) const {
-		nng_duration out;
-		int r = nng_getopt_ms(s,name,&out);
-		if( r != 0 ) {
-			throw exception(r,"nng_getopt_ms");
+			throw exception(r,"nng_socket_get_int");
 		}
 		return out;
 	}
 	
 	size_t get_opt_size( const char* name ) const {
 		size_t out;
-		int r = nng_getopt_size(s,name,&out);
+		int r = nng_socket_get_size(s,name,&out);
 		if( r != 0 ) {
-			throw exception(r,"nng_getopt_size");
+			throw exception(r,"nng_socket_get_size");
 		}
 		return out;
 	}
 	
 	uint64_t get_opt_uint64( const char* name ) const {
 		uint64_t out;
-		int r = nng_getopt_uint64(s,name,&out);
+		int r = nng_socket_get_uint64(s,name,&out);
 		if( r != 0 ) {
-			throw exception(r,"nng_getopt_uint64");
-		}
-		return out;
-	}
-
-	void* get_opt_ptr( const char* name ) const {
-		void* out;
-		int r = nng_getopt_ptr(s,name,&out);
-		if( r != 0 ) {
-			throw exception(r,"nng_getopt_ptr");
+			throw exception(r,"nng_socket_get_uint64");
 		}
 		return out;
 	}
 	
 	buffer get_opt_string( const char* name ) const {
 		char* data;
-		int r = nng_getopt_string(s,name,&data);
+		int r = nng_socket_get_string(s,name,&data);
 		if( r != 0 ) {
-			throw exception(r,"nng_getopt_string");
+			throw exception(r,"nng_socket_get_string");
 		}
 		return buffer(data,strlen(data)+1);
+	}
+
+	void* get_opt_ptr( const char* name ) const {
+		void* out;
+		int r = nng_socket_get_ptr(s,name,&out);
+		if( r != 0 ) {
+			throw exception(r,"nng_socket_get_ptr");
+		}
+		return out;
+	}
+	
+	nng_duration get_opt_ms( const char* name ) const {
+		nng_duration out;
+		int r = nng_socket_get_ms(s,name,&out);
+		if( r != 0 ) {
+			throw exception(r,"nng_socket_get_ms");
+		}
+		return out;
+	}
+
+	nng_sockaddr get_opt_addr( const char* name ) const {
+		nng_sockaddr out;
+		int r = nng_socket_get_addr(s,name,&out);
+		if( r != 0 ) {
+			throw exception(r,"nng_socket_get_addr");
+		}
+		return out;
 	}
 	
 };

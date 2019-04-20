@@ -66,15 +66,6 @@ public:
 		return out;
 	}
 	
-	nng_duration get_ms( const char* name ) const {
-		nng_duration out;
-		int r = nng_stream_dialer_get_ms(d,name,&out);
-		if( r != 0 ) {
-			throw exception(r,"nng_stream_dialer_get_ms");
-		}
-		return out;
-	}
-	
 	size_t get_size( const char* name ) const {
 		size_t out;
 		int r = nng_stream_dialer_get_size(d,name,&out);
@@ -93,11 +84,29 @@ public:
 		return out;
 	}
 
+	buffer get_string( const char* name ) const {
+		char* data;
+		int r = nng_stream_dialer_get_string(d,name,&data);
+		if( r != 0 ) {
+			throw exception(r,"nng_stream_dialer_get_string");
+		}
+		return buffer(data,strlen(data)+1);
+	}
+
 	void* get_ptr( const char* name ) const {
 		void* out;
 		int r = nng_stream_dialer_get_ptr(d,name,&out);
 		if( r != 0 ) {
 			throw exception(r,"nng_stream_dialer_get_ptr");
+		}
+		return out;
+	}
+	
+	nng_duration get_ms( const char* name ) const {
+		nng_duration out;
+		int r = nng_stream_dialer_get_ms(d,name,&out);
+		if( r != 0 ) {
+			throw exception(r,"nng_stream_dialer_get_ms");
 		}
 		return out;
 	}
@@ -137,13 +146,6 @@ public:
 		}
 	}
 	
-	void set_ms( const char* name, nng_duration value ) const {
-		int r = nng_stream_dialer_set_ms(d,name,value);
-		if( r != 0 ) {
-			throw exception(r,"nng_stream_dialer_set_ms");
-		}
-	}
-	
 	void set_size( const char* name, size_t value ) const {
 		int r = nng_stream_dialer_set_size(d,name,value);
 		if( r != 0 ) {
@@ -169,6 +171,13 @@ public:
 		int r = nng_stream_dialer_set_ptr(d,name,value);
 		if( r != 0 ) {
 			throw exception(r,"nng_stream_dialer_set_ptr");
+		}
+	}
+	
+	void set_ms( const char* name, nng_duration value ) const {
+		int r = nng_stream_dialer_set_ms(d,name,value);
+		if( r != 0 ) {
+			throw exception(r,"nng_stream_dialer_set_ms");
 		}
 	}
 	

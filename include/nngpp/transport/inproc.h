@@ -1,10 +1,7 @@
 #ifndef NNGPP_TRANSPORT_INPROC_H
 #define NNGPP_TRANSPORT_INPROC_H
 #include <nngpp/error.h>
-
-extern "C" {
 #include <nng/transport/inproc/inproc.h>
-}
 
 namespace nng { namespace inproc {
 

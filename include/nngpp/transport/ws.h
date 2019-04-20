@@ -3,10 +3,7 @@
 #include <nngpp/listener_view.h>
 #include <nngpp/dialer_view.h>
 #include <nngpp/pipe_view.h>
-
-extern "C" {
 #include <nng/transport/ws/websocket.h>
-}
 
 namespace nng { namespace ws {
 

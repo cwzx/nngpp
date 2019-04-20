@@ -70,15 +70,6 @@ public:
 		return out;
 	}
 	
-	nng_duration get_ms( const char* name ) const {
-		nng_duration out;
-		int r = nng_stream_get_ms(s,name,&out);
-		if( r != 0 ) {
-			throw exception(r,"nng_stream_get_ms");
-		}
-		return out;
-	}
-	
 	size_t get_size( const char* name ) const {
 		size_t out;
 		int r = nng_stream_get_size(s,name,&out);
@@ -97,11 +88,29 @@ public:
 		return out;
 	}
 
+	buffer get_string( const char* name ) const {
+		char* data;
+		int r = nng_stream_get_string(s,name,&data);
+		if( r != 0 ) {
+			throw exception(r,"nng_stream_get_string");
+		}
+		return buffer(data,strlen(data)+1);
+	}
+
 	void* get_ptr( const char* name ) const {
 		void* out;
 		int r = nng_stream_get_ptr(s,name,&out);
 		if( r != 0 ) {
 			throw exception(r,"nng_stream_get_ptr");
+		}
+		return out;
+	}
+	
+	nng_duration get_ms( const char* name ) const {
+		nng_duration out;
+		int r = nng_stream_get_ms(s,name,&out);
+		if( r != 0 ) {
+			throw exception(r,"nng_stream_get_ms");
 		}
 		return out;
 	}
@@ -141,13 +150,6 @@ public:
 		}
 	}
 	
-	void set_ms( const char* name, nng_duration value ) const {
-		int r = nng_stream_set_ms(s,name,value);
-		if( r != 0 ) {
-			throw exception(r,"nng_stream_set_ms");
-		}
-	}
-	
 	void set_size( const char* name, size_t value ) const {
 		int r = nng_stream_set_size(s,name,value);
 		if( r != 0 ) {
@@ -173,6 +175,13 @@ public:
 		int r = nng_stream_set_ptr(s,name,value);
 		if( r != 0 ) {
 			throw exception(r,"nng_stream_set_ptr");
+		}
+	}
+	
+	void set_ms( const char* name, nng_duration value ) const {
+		int r = nng_stream_set_ms(s,name,value);
+		if( r != 0 ) {
+			throw exception(r,"nng_stream_set_ms");
 		}
 	}
 	
