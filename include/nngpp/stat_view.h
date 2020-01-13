@@ -1,6 +1,6 @@
 #ifndef NNGPP_STAT_VIEW_H
 #define NNGPP_STAT_VIEW_H
-#include <nng/nng.h>
+#include "socket_view.h"
 
 namespace nng {
 
