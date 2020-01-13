@@ -54,6 +54,15 @@ public:
 		}
 		return handler(h.get());
 	}
+
+	nng_sockaddr get_addr() const {
+		nng_sockaddr out;
+		int r = nng_http_server_get_addr(s, &out);
+		if( r != 0 ) {
+			throw exception(r,"nng_http_server_get_addr");
+		}
+		return out;
+	}
 	
 	tls::config_view get_tls() const {
 		nng_tls_config* cfg;

@@ -81,6 +81,22 @@ public:
 	uint64_t timestamp() const noexcept {
 		return nng_stat_timestamp(s);
 	}
+
+	stat_view find(const char* name) const noexcept {
+		return nng_stat_find(s, name);
+	}
+
+	stat_view find(socket_view socket) const noexcept {
+		return nng_stat_find_socket(s, socket.get());
+	}
+
+	stat_view find(dialer_view dialer) const noexcept {
+		return nng_stat_find_dialer(s, dialer.get());
+	}
+
+	stat_view find(listener_view listener) const noexcept {
+		return nng_stat_find_listener(s, listener.get());
+	}
 };
 
 }
