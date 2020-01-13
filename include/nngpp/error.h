@@ -26,6 +26,7 @@ enum class error {
 	msgsize     = NNG_EMSGSIZE,
 	connaborted = NNG_ECONNABORTED,
 	connreset   = NNG_ECONNRESET,
+	connshut    = NNG_ECONNSHUT,
 	canceled    = NNG_ECANCELED,
 	nofiles     = NNG_ENOFILES,
 	nospc       = NNG_ENOSPC,

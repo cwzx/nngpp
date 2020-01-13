@@ -25,8 +25,9 @@ inline socket open_raw() {
 }
 
 enum class option {
-	subscribe,  // opaque
-	unsubscribe // opaque
+	subscribe,   // opaque
+	unsubscribe, // opaque
+	prefnew      // bool
 };
 
 namespace detail {
@@ -38,7 +39,8 @@ static
 #endif
 const char* const option_names[] = {
 	NNG_OPT_SUB_SUBSCRIBE,
-	NNG_OPT_SUB_UNSUBSCRIBE
+	NNG_OPT_SUB_UNSUBSCRIBE,
+	NNG_OPT_SUB_PREFNEW
 };
 
 }
@@ -53,6 +55,14 @@ inline void set_opt_subscribe( socket_view s, view v ) {
 
 inline void set_opt_unsubscribe( socket_view s, view v ) {
 	s.set_opt( to_name(option::unsubscribe), v );
+}
+
+inline bool get_opt_prefnew( socket_view s ) {
+	return s.get_opt_bool( to_name(option::prefnew) );
+}
+
+inline void set_opt_prefnew( socket_view s, bool v ) {
+	s.set_opt_bool( to_name(option::prefnew), v );
 }
 
 }
