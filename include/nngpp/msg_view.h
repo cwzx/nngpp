@@ -49,15 +49,6 @@ public:
 	pipe_view get_pipe() const noexcept {
 		return nng_msg_get_pipe(m);
 	}
-	
-	size_t get_opt( int opt, buffer& out ) const {
-		size_t size = out.size();
-		int r = nng_msg_getopt(m,opt,out.data(),&size);
-		if( r != 0 ) {
-			throw exception(r,"nng_msg_getopt");
-		}
-		return size;
-	}
 };
 
 }

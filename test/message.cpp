@@ -195,15 +195,6 @@ TEST_CASE("Message dup works","[message]") {
 	REQUIRE(m2.body().get() == "back2basics");
 }
 
-TEST_CASE("Missing option fails properly","[message]") {
-	auto msg = nng::make_msg(0);
-	nng::buffer out(128);
-	REQUIRE_THROWS_WITH(
-		msg.get_opt(4545, out),
-		nng::exception(nng::error::noent).what()
-	);
-}
-
 TEST_CASE("Uint32 body operations work","[message]") {
 	auto msg = nng::make_msg(0);
 
