@@ -1,5 +1,5 @@
 
-CXX = /usr/local/gcc-8.3.0/bin/g++
+CXX = /usr/local/gcc-9.2.0/bin/g++
 
 LIBRARIES = /mnt/c/Dev
 LINUX_LIBS = /home/chris/lib

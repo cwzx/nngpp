@@ -50,6 +50,13 @@ public:
 			throw exception(r,"nng_http_handler_set_tree");
 		}
 	}
+
+	void set_tree_exclusive() const {
+		int r = nng_http_handler_set_tree_exclusive(h);
+		if( r != 0 ) {
+			throw exception(r,"nng_http_handler_set_tree_exclusive");
+		}
+	}
 	
 	void* get_data() const noexcept {
 		return nng_http_handler_get_data(h);

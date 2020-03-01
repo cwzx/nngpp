@@ -234,6 +234,7 @@
     <ClInclude Include="..\..\include\nngpp\transport\tls.h" />
     <ClInclude Include="..\..\include\nngpp\transport\tls\config.h" />
     <ClInclude Include="..\..\include\nngpp\transport\tls\config_view.h" />
+    <ClInclude Include="..\..\include\nngpp\transport\tls\engine.h" />
     <ClInclude Include="..\..\include\nngpp\transport\ws.h" />
     <ClInclude Include="..\..\include\nngpp\transport\wss.h" />
     <ClInclude Include="..\..\include\nngpp\transport\zerotier.h" />

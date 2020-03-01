@@ -24,6 +24,15 @@ inline socket open_raw() {
 	return socket(s);
 }
 
+inline socket open_poly() {
+	nng_socket s;
+	int r = nng_pair1_open_poly(&s);
+	if( r != 0 ) {
+		throw exception(r,"nng_pair1_open_poly");
+	}
+	return socket(s);
+}
+
 enum class option {
 	poly // bool
 };
@@ -47,10 +56,6 @@ inline const char* to_name( option o ) noexcept {
 
 inline bool get_opt_poly( socket_view s ) {
 	return s.get_opt_bool( to_name(option::poly) );
-}
-
-inline void set_opt_poly( socket_view s, bool v ) {
-	s.set_opt_bool( to_name(option::poly), v );
 }
 
 }

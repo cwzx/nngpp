@@ -1,9 +1,9 @@
 #ifndef NNGPP_TRANSPORT_TLS_H
 #define NNGPP_TRANSPORT_TLS_H
-#include "tls/config.h"
 #include <nngpp/listener_view.h>
 #include <nngpp/dialer_view.h>
 #include <nngpp/pipe_view.h>
+#include "tls/config.h"
 #include <nng/transport/tls/tls.h>
 
 namespace nng { namespace tls {

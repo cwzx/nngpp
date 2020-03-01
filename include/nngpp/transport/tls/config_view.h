@@ -16,6 +16,13 @@ enum class auth_mode {
 	required = NNG_TLS_AUTH_MODE_REQUIRED
 };
 
+enum class version {
+	tls_1_0 = NNG_TLS_1_0,
+	tls_1_1 = NNG_TLS_1_1,
+	tls_1_2 = NNG_TLS_1_2,
+	tls_1_3 = NNG_TLS_1_3
+};
+
 struct config;
 
 struct config_view {
@@ -101,6 +108,14 @@ public:
 		int r = nng_tls_config_cert_key_file(c,path,pass);
 		if( r != 0 ) {
 			throw exception(r,"nng_tls_config_cert_key_file");
+		}
+		return *this;
+	}
+	
+	const config_view& config_version( version min_ver, version max_ver ) const {
+		int r = nng_tls_config_version(c,(nng_tls_version)min_ver,(nng_tls_version)max_ver);
+		if( r != 0 ) {
+			throw exception(r,"nng_tls_config_version");
 		}
 		return *this;
 	}

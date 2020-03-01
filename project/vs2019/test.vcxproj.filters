@@ -296,5 +296,8 @@
     <ClInclude Include="..\..\include\nngpp\stream\stream_view.h">
       <Filter>Header Files\stream</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\nngpp\transport\tls\engine.h">
+      <Filter>Header Files\transport\tls</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
