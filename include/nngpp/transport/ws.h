@@ -23,6 +23,8 @@ enum class option {
 	send_frame_max,   // size
 	recv_frame_max,   // size
 	protocol,         // string
+	send_text,        // bool
+	recv_text,        // bool
 };
 
 namespace detail {
@@ -40,7 +42,9 @@ const char* const option_names[] = {
 	NNG_OPT_WS_REQUEST_URI,
 	NNG_OPT_WS_SENDMAXFRAME,
 	NNG_OPT_WS_RECVMAXFRAME,
-	NNG_OPT_WS_PROTOCOL
+	NNG_OPT_WS_PROTOCOL,
+	NNG_OPT_WS_SEND_TEXT,
+	NNG_OPT_WS_RECV_TEXT
 };
 
 }

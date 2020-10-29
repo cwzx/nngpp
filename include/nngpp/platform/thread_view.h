@@ -26,6 +26,10 @@ public:
 		return t != nullptr;
 	}
 
+	void set_name(const char* name) const noexcept {
+		nng_thread_set_name(t, name);
+	}
+
 };
 
 }
