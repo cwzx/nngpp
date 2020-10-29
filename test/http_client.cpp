@@ -3,6 +3,14 @@
 #include <nngpp/http/http.h>
 #include <nngpp/platform/platform.h>
 
+namespace Catch {
+
+template<>
+struct is_range<nng::aio> : std::false_type {
+};
+
+}
+
 TEST_CASE("HTTP Client","[httpclient]") {
 
 	SECTION("Given a TCP connection to httpbin.org") {
