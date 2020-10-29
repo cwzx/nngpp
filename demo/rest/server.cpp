@@ -101,7 +101,7 @@ static void rest_http_fatal(std::unique_ptr<rest_job>&& job, const char* who, nn
 	rest_recycle_job(std::move(job));
 }
 
-static void rest_job_cb(void* arg) {
+static void rest_job_cb(void* arg) try {
 	std::unique_ptr<rest_job> job( (rest_job*)arg );
 	nng::aio_view aio = job->aio;
 
@@ -150,10 +150,18 @@ static void rest_job_cb(void* arg) {
 		break;
 	}
 }
+catch( const nng::exception& e ) {
+	fprintf(stderr, "rest_job_cb: %s: %s\n", e.who(), e.what());
+	exit(1);
+}
+catch( ... ) {
+	fprintf(stderr, "rest_job_cb: unknown exception\n");
+	exit(1);
+}
 
 // Our rest server just takes the message body, creates a request ID
 // for it, and sends it on.  This runs in raw mode, so
-void rest_handle(nng_aio* a) {
+void rest_handle(nng_aio* a) try {
 	nng::aio_view aio = a;
 	nng::http::req_view req = aio.get_input<nng_http_req>(0);
 
@@ -189,6 +197,14 @@ void rest_handle(nng_aio* a) {
 	job->ctx.send(job->aio);
 	job.release();
 }
+catch( const nng::exception& e ) {
+	fprintf(stderr, "rest_handle: %s: %s\n", e.who(), e.what());
+	exit(1);
+}
+catch( ... ) {
+	fprintf(stderr, "rest_handle: unknown exception\n");
+	exit(1);
+}
 
 nng::http::server rest_start(uint16_t port) {
 
@@ -215,7 +231,7 @@ nng::http::server rest_start(uint16_t port) {
 	handler.set_method( nng::http::verb::post );
 	// We want to collect the body, and we (arbitrarily) limit this to
 	// 128KB.  The default limit is 1MB.  You can explicitly collect
-	// the deta yourself with another HTTP read transaction by disabling
+	// the data yourself with another HTTP read transaction by disabling
 	// this, but that's a lot of work, especially if you want to handle
 	// chunked transfers.
 	handler.collect_body(true, 1024 * 128);
@@ -259,7 +275,12 @@ void inproc_server(void*) try {
 	}
 }
 catch( const nng::exception& e ) {
-	fprintf(stderr, "%s: %s\n", e.who(), e.what());
+	fprintf(stderr, "inproc_server: %s: %s\n", e.who(), e.what());
+	exit(1);
+}
+catch( ... ) {
+	fprintf(stderr, "inproc_server: unknown exception\n");
+	exit(1);
 }
 
 int main(int argc, char** argv) try {

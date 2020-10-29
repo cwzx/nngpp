@@ -32,7 +32,7 @@ struct work {
 	explicit work( nng::socket_view sock ) : ctx(sock) {}
 };
 
-void server_cb(void* arg) {
+void server_cb(void* arg) try {
 	work* work = (struct work*)arg;
 	uint32_t when;
 
@@ -83,6 +83,14 @@ void server_cb(void* arg) {
 		throw nng::exception(nng::error::state);
 		break;
 	}
+}
+catch( const nng::exception& e ) {
+	fprintf(stderr, "server_cb: %s: %s\n", e.who(), e.what());
+	exit(1);
+}
+catch( ... ) {
+	fprintf(stderr, "server_cb: unknown exception\n");
+	exit(1);
 }
 
 // The server runs forever.
