@@ -40,8 +40,8 @@ namespace nng {
 				byte_offset allows I/O to a later section of the body (eg, after application headers).
 				bytes_max allows the readable/writable range (and hence message size) to be limited.
 		*/
-		basic_msgbuf* open_range(nng::msg_view msg,  openmode mode, size_t byte_offset, size_t bytes_max = ~size_t(0))    {open_range(msg.get(),      mode, byte_offset, bytes_max);}
-		basic_msgbuf* open_range(nng::msg_body body, openmode mode, size_t byte_offset, size_t bytes_max = ~size_t(0))    {open_range(body.get_msg(), mode, byte_offset, bytes_max);}
+		basic_msgbuf* open_range(nng::msg_view msg,  openmode mode, size_t byte_offset, size_t bytes_max = ~size_t(0))    {return open_range(msg.get(),      mode, byte_offset, bytes_max);}
+		basic_msgbuf* open_range(nng::msg_body body, openmode mode, size_t byte_offset, size_t bytes_max = ~size_t(0))    {return open_range(body.get_msg(), mode, byte_offset, bytes_max);}
 		basic_msgbuf* open_range(nng_msg*      msg,  openmode mode, size_t byte_offset, size_t bytes_max = ~size_t(0))
 		{
 			// Validate
@@ -82,24 +82,6 @@ namespace nng {
 				return 0;
 			}
 			return -1;
-		}
-
-		std::streamsize xsputn(const char_type* s, std::streamsize n) override
-		{
-			if (!_is_writing() || !n) return 0;
-			_sync_length();
-
-			// Automatically grow message body
-			size_t need_capac = _count()+n;
-			if (need_capac > _capac())
-			{
-				if (!_auto_grow(need_capac)) return 0;
-			}
-
-			// Write data to message
-			nng_msg_append(_msg, (void*) s, n*sizeof(char_type));
-			this->setp(_start(), this->pptr() + n, _p_end());
-			return n;
 		}
 
 		std::streamsize xsgetn(char_type* s, std::streamsize n) override
@@ -146,38 +128,53 @@ namespace nng {
 			return traits_type::eof();
 		}
 
+		std::streamsize xsputn(const char_type* s, std::streamsize n) override
+		{
+			if (!_is_writing() || !n) return 0;
+			_sync_length();
+
+			// Prepare write
+			auto pptr = _prepare_write(n);
+			if (!pptr) return traits_type::eof();
+
+			// Copy data
+			std::memcpy((void*) pptr, (const void*) s, n * sizeof(char_type));
+
+			// Write data to message
+			this->setp(_start(), this->pptr() + n, _p_end());
+			return n;
+		}
+
 		int_type overflow(int_type c) override
 		{
 			if (!_is_writing()) return traits_type::eof();
 
-			if (_count() >= _capac())
-			{
-				// Automatically grow the buffer
-				if (!_auto_grow()) return traits_type::eof();
-			}
-
 			// Put character without advancing position.
-			auto pptr = this->pptr();
-			*this->pptr() = c;
-			this->setp(_start(), this->pptr()+1, _p_end());
+			auto pptr = _prepare_write(1);
+			if (!pptr) return traits_type::eof();
+			*pptr = c;
+
+			// But wait, we actually advance?!?
+			this->setp(_start(), pptr+1, _p_end());
 			return traits_type::to_int_type(c);
 		}
 		
 		pos_type seekpos(std::streampos _pos, openmode which = std::ios::in | std::ios::out) override
 		{
 			_sync_length();
+			char_type *st = _start();
 			size_t pos = ((_pos < 0) ? 0 : size_t(_pos));
 			if (pos > _count()) pos = _count();
 
-			if (which & std::ios::in ) this->setg(_start(), _start()+pos, _g_end());
-			if (which & std::ios::out) this->setp(_start(), _start()+pos, _g_end());
+			if (which & std::ios::in ) this->setg(st, st+pos, _g_end());
+			if (which & std::ios::out) this->setp(st, st+pos, _g_end());
 
 			return pos;
 		}
 
 		pos_type seekoff(off_type off, std::ios::seekdir way, openmode which = std::ios::in | std::ios::out) override
 		{
-			char_type *gp, *pp;
+			char_type *gp, *pp, *st = _start();
 			switch (way)
 			{
 			default:
@@ -187,11 +184,11 @@ namespace nng {
 			}
 			gp += off;
 			pp += off;
-			if (which & std::ios::in ) this->setg(_start(), gp, _g_end());
-			if (which & std::ios::out) this->setp(_start(), pp, _p_end());
+			if (which & std::ios::in ) this->setg(st, gp, _g_end());
+			if (which & std::ios::out) this->setp(st, pp, _p_end());
 
-			if (which & std::ios::out) return pp-_start();
-			else                       return gp-_start();
+			if (which & std::ios::out) {return pp-st;}
+			else                       {return gp-st;}
 		}
 
 
@@ -219,39 +216,52 @@ namespace nng {
 		}
 
 		// Increase capacity, so that the resulting capacity is at least min_capac.
-		bool _auto_grow(size_t min_capac = 32)
+		char_type* _prepare_write(size_t write_count)
 		{
 			size_t capac = _capac();
-			size_t max_capac = _limit();
+
+			// Do we need to grow message capacity?
+			auto pptr = this->pptr();
+			const size_t min_length = size_t(pptr-_start()) + write_count;
+			if (min_length > capac)
+			{
+				// OK, grow...
+				size_t max_capac = _limit(), min_capac = min_length;
+				if (min_length > max_capac) return nullptr;
+
+				// Prefer doubling in size with a minimum of 32.
+				if (min_capac < 32) min_capac = 32;
+				capac = capac * 2;
+				if      (capac > max_capac) capac = max_capac;
+				else if (capac < min_capac) capac = min_capac;
+
+				// Note GET and PUT indexes before reallocating
+				char_type *start = _start();
+				size_t p_ind =    pptr   - start,
+					g_ind = this->gptr() - start;
+
+				// Reserve more space amd possibly expand the message
+				const size_t new_capac_bytes  = sizeof(char_type) * capac;
+				auto code = nng_msg_reserve(_msg, _byte_off + new_capac_bytes);
+				if (code != 0) return nullptr;
+
+				// Update pointers based on GET and PUT indexes
+				start = _start();
+				this->setg(start, start+g_ind, _g_end());
+				this->setp(start, start+p_ind, _p_end());
+				pptr = start + p_ind;
+			}
+
+			// Update message length as well, if needed
+			const size_t min_length_bytes = min_length * sizeof(char_type);
+			if (min_length_bytes > nng_msg_len(_msg))
+			{
+				// Expand message body
+				auto code = nng_msg_realloc(_msg, _byte_off + min_length_bytes);
+				if (code != 0) return nullptr;
+			}
 			
-			if (min_capac > max_capac || capac >= max_capac) return false;
-
-			capac = capac * 2;
-			if      (capac > max_capac) capac = max_capac;
-			else if (capac < min_capac) capac = min_capac;
-			_grow(capac);
-			return true;
-		}
-
-		void _grow(size_t new_capac)
-		{
-			if (new_capac < _capac()) return;
-
-			// Reallocate message and update pointers
-			char_type *start;
-			size_t g_ind, p_ind, written_elems = _count();
-			start = _start();
-			if (_is_reading()) g_ind = this->gptr() - _start();
-			if (_is_writing()) p_ind = this->pptr() - _start();
-
-			// Reserve more space
-			auto code = nng_msg_reserve(_msg, new_capac * sizeof(char_type));
-			if (code != 0) throw nng::exception(code, "nng_msg_realloc");
-
-			// Update addresses
-			start = _start();
-			if (_is_reading()) this->setg(start, start+g_ind, _g_end());
-			if (_is_writing()) this->setp(start, start+p_ind, _p_end());
+			return pptr;
 		}
 	};
 
