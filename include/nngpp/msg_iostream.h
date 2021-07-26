@@ -121,7 +121,7 @@ namespace nng {
 				if (gpos < gend)
 				{
 					this->setg(_start(), gpos, gend);
-					return *gpos;
+					return traits_type::to_int_type(*gpos);
 				}
 			}
 			
@@ -152,14 +152,14 @@ namespace nng {
 			// Put character without advancing position.
 			auto pptr = _prepare_write(1);
 			if (!pptr) return traits_type::eof();
-			*pptr = c;
+			*pptr = traits_type::to_char_type(c);
 
 			// But wait, we actually advance?!?
 			this->setp(_start(), pptr+1, _p_end());
-			return traits_type::to_int_type(c);
+			return c;
 		}
 		
-		pos_type seekpos(std::streampos _pos, openmode which = std::ios::in | std::ios::out) override
+		pos_type seekpos(pos_type _pos, openmode which = std::ios::in | std::ios::out) override
 		{
 			_sync_length();
 			char_type *st = _start();
@@ -199,7 +199,7 @@ namespace nng {
 
 		size_t     _sizeb(size_t n) const    {n -= _byte_off; return (n > _byte_max) ? _byte_max : n;}
 
-		char_type *_start() const    {return static_cast<char_type*>(static_cast<char*>(nng_msg_body(_msg))+_byte_off);}
+		char_type *_start() const    {return reinterpret_cast<char_type*>(static_cast<char*>(nng_msg_body(_msg))+_byte_off);}
 		char_type *_g_end() const    {return _start() + _count();}
 		char_type *_p_end() const    {return _start() + _capac();}
 		size_t     _capac() const    {return _sizeb(nng_msg_capacity(_msg))/sizeof(char_type);}
@@ -212,7 +212,7 @@ namespace nng {
 		void _sync_length() noexcept
 		{
 			if (this->pptr() > _g_end())
-				nng_msg_realloc(_msg, static_cast<char*>(this->pptr())-static_cast<char*>(_start()));
+				nng_msg_realloc(_msg, reinterpret_cast<char*>(this->pptr())-reinterpret_cast<char*>(_start()));
 		}
 
 		// Increase capacity, so that the resulting capacity is at least min_capac.
