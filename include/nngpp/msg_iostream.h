@@ -67,13 +67,19 @@ namespace nng {
 				*gpos = start,
 				*ppos = (((mode & std::ios::ate) | (mode & std::ios::app)) ? _g_end() : start);
 
-			if (mode & std::ios::in)  this->setg(start, gpos, _g_end());
-			if (mode & std::ios::out) this->setp(start, ppos, _p_end());
+			if (mode & std::ios::in)  this->setg (start, gpos, _g_end());
+			if (mode & std::ios::out) this->setp_(start, ppos, _p_end());
 
 			return this;
 		}
 
 	protected:
+		void setp_(char* new_pbase, char *new_pptr, char* new_epptr)
+		{
+			this->basic_streambuf::setp(new_pbase, new_epptr);
+			this->pbump(new_pptr - new_pbase);
+		}
+	
 		int sync() override
 		{
 			if (is_open())
@@ -141,7 +147,7 @@ namespace nng {
 			std::memcpy((void*) pptr, (const void*) s, n * sizeof(char_type));
 
 			// Write data to message
-			this->setp(_start(), this->pptr() + n, _p_end());
+			this->setp_(_start(), this->pptr() + n, _p_end());
 			return n;
 		}
 
@@ -155,7 +161,7 @@ namespace nng {
 			*pptr = traits_type::to_char_type(c);
 
 			// But wait, we actually advance?!?
-			this->setp(_start(), pptr+1, _p_end());
+			this->setp_(_start(), pptr+1, _p_end());
 			return c;
 		}
 		
@@ -166,8 +172,8 @@ namespace nng {
 			size_t pos = ((_pos < 0) ? 0 : size_t(_pos));
 			if (pos > _count()) pos = _count();
 
-			if (which & std::ios::in ) this->setg(st, st+pos, _g_end());
-			if (which & std::ios::out) this->setp(st, st+pos, _g_end());
+			if (which & std::ios::in ) this->setg (st, st+pos, _g_end());
+			if (which & std::ios::out) this->setp_(st, st+pos, _g_end());
 
 			return pos;
 		}
@@ -184,8 +190,8 @@ namespace nng {
 			}
 			gp += off;
 			pp += off;
-			if (which & std::ios::in ) this->setg(st, gp, _g_end());
-			if (which & std::ios::out) this->setp(st, pp, _p_end());
+			if (which & std::ios::in ) this->setg (st, gp, _g_end());
+			if (which & std::ios::out) this->setp_(st, pp, _p_end());
 
 			if (which & std::ios::out) {return pp-st;}
 			else                       {return gp-st;}
@@ -247,8 +253,8 @@ namespace nng {
 
 				// Update pointers based on GET and PUT indexes
 				start = _start();
-				this->setg(start, start+g_ind, _g_end());
-				this->setp(start, start+p_ind, _p_end());
+				this->setg (start, start+g_ind, _g_end());
+				this->setp_(start, start+p_ind, _p_end());
 				pptr = start + p_ind;
 			}
 
