@@ -74,12 +74,6 @@ namespace nng {
 		}
 
 	protected:
-		void setp_(char* new_pbase, char *new_pptr, char* new_epptr)
-		{
-			this->basic_streambuf::setp(new_pbase, new_epptr);
-			this->pbump(new_pptr - new_pbase);
-		}
-	
 		int sync() override
 		{
 			if (is_open())
@@ -147,7 +141,7 @@ namespace nng {
 			std::memcpy((void*) pptr, (const void*) s, n * sizeof(char_type));
 
 			// Write data to message
-			this->setp_(_start(), this->pptr() + n, _p_end());
+			this->pbump(int(n));
 			return n;
 		}
 
@@ -161,7 +155,7 @@ namespace nng {
 			*pptr = traits_type::to_char_type(c);
 
 			// But wait, we actually advance?!?
-			this->setp_(_start(), pptr+1, _p_end());
+			this->pbump(1);
 			return c;
 		}
 		
@@ -173,7 +167,7 @@ namespace nng {
 			if (pos > _count()) pos = _count();
 
 			if (which & std::ios::in ) this->setg (st, st+pos, _g_end());
-			if (which & std::ios::out) this->setp_(st, st+pos, _g_end());
+			if (which & std::ios::out) this->setp_(st, st+pos, _p_end());
 
 			return pos;
 		}
@@ -214,6 +208,13 @@ namespace nng {
 
 		bool _is_writing() const noexcept    {return _mode & std::ios::out;}
 		bool _is_reading() const noexcept    {return _mode & std::ios::in;}
+
+		// Behaves like the non-standard microsoft implementation of setp
+		void setp_(char* new_pbase, char *new_pptr, char* new_epptr)
+		{
+			this->basic_streambuf::setp(new_pbase, new_epptr);
+			this->pbump(new_pptr - new_pbase);
+		}
 
 		void _sync_length() noexcept
 		{
