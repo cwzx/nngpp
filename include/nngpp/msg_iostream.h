@@ -213,13 +213,13 @@ namespace nng {
 		void setp_(char* new_pbase, char *new_pptr, char* new_epptr)
 		{
 			this->basic_streambuf::setp(new_pbase, new_epptr);
-			this->pbump(new_pptr - new_pbase);
+			this->pbump(int(new_pptr - new_pbase));
 		}
 
 		void _sync_length() noexcept
 		{
 			if (this->pptr() > _g_end())
-				nng_msg_realloc(_msg, reinterpret_cast<char*>(this->pptr())-reinterpret_cast<char*>(_start()));
+				nng_msg_realloc(_msg, _byte_off + reinterpret_cast<char*>(this->pptr())-reinterpret_cast<char*>(_start()));
 		}
 
 		// Increase capacity, so that the resulting capacity is at least min_capac.
